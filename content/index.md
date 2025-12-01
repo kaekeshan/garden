@@ -11,6 +11,6 @@ Hello.. myself [Jetlee](https://in.linkedin.com/in/jetleejoy) and this is my dig
 An online space, that acts as living, evolving collections of thoughts and ideas. To put it simply  it is an online version of a personal wiki or notebook that can be shared publicaly with the   goal of exploring and growing knowledge over time
 
 #### Contents
-1. scribbles
+1. [[scribbles/]]
 2. [[compiles/]]
 

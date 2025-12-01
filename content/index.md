@@ -1,10 +1,16 @@
 ---
-title: 👋 Welcome
+title: Digital Garden
+draft: false
+date: 2025-11-30
 ---
 
-Hello.. Myself [Jetlee](https://in.linkedin.com/in/jetleejoy), this is a github hosted page, 
-created with [Quartz](https://quartz.jzhao.xyz/).  
+Hello.. myself [Jetlee](https://in.linkedin.com/in/jetleejoy) and this is my digital garden.
 
-Updates to this space are infrequent, but I'll do my best to maintain a pattern. No promises, though!😉
+### What is a digital garden ?
 
---- 
+An online space, that acts as living, evolving collections of thoughts and ideas. To put it simply  it is an online version of a personal wiki or notebook that can be shared publicaly with the   goal of exploring and growing knowledge over time
+
+#### Contents
+1. scribbles
+2. [[compiles/]]
+

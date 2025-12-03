@@ -7,7 +7,7 @@ tags: [linux,dev]
 
 ## Accessing The Command Line
 
-### Theory pointer
+### Theory
 
 1. __Console__ 
 

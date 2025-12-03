@@ -311,7 +311,7 @@ A pipe is a form of redirection, i.e. transfer of output to some other destinati
 
 ![](Untitled.png)
                 
-3. __Editing using [[../scribbles/setups/neo-vim/| vim ]]__
+3. __Editing using [[scribbles/setups/neo-vim| vim ]]__
     - improved version of vi text editor
         - Vim editor mods
             - command mode - default startup mode, used for navigation, cut and paste operation and other text manipulations, press esc to get into command mode from modes

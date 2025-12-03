@@ -47,9 +47,9 @@ The following code appends the lazy module to the standard data path of vim
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 ```
 
-In windows, `lua print(vim.fn.stdpath("data"))` will return ![image.png](../assets/image_1712002733167_0.png)  
+In windows, `lua print(vim.fn.stdpath("data"))` will return ![image.png](../../assets/image_1712002733167_0.png)  
 To toggle Lazy.nvim window, use ==Lazy== command  
-![image.png](../assets/image_1712003514001_0.png)
+![image.png](../../assets/image_1712003514001_0.png)
 
 ### Plugins ?
 

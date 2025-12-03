@@ -11,7 +11,7 @@ date: 2025-11-30
 In Windows system the config file (**init.lua**) is located in C:\\Users\\<user>\\AppData\\Local\\nvim directory.   
 Create a names space hierarchy in the nvim directory like -  
 
-![image.png](../assets/image_1711998665199_0.png)
+![image.png](../../assets/image_1711998665199_0.png)
 >kaekeshan is the namespace used in the example.  
 
 ==launch.lua== file contains a custom function to control the imports

@@ -595,30 +595,29 @@ $su -
         - execute (x)
             - files can be executed as commands
             - contents of the directory can be assessed (depending on the permission of the files in the directory)
-        - format
+    - format
              - ls -l <file>  
              ![](Untitled%201.png)
              - '-' for file types
              - 'd' for directory
-        - changing file permissions // use chmod command, flag -R : recursive 
-                    
-             - symbolic method
-                - u - user
-                - g - group
-                - o - other
-                - a - all
-                - \+ // add
-                - \- // remove
-                - = // set exactly
-                - r // read
-                - w // write
-                - x // execute
-             - numeric method // chmod ### <file | dir>
-                - r = 4
-                - w = 2
-                - x = 1
-                - Each # represents an access level, user or group or other
-                - value of # is sum of r, w and x
+    - changing file permissions // use chmod command, flag -R : recursive 
+        - symbolic method
+            - u - user
+            - g - group
+            - o - other
+            - a - all
+            - \+ // add
+            - \- // remove
+            - = // set exactly
+            - r // read
+            - w // write
+            - x // execute
+        - numeric method - `chmod ### <file | dir>`
+            - r = 4
+            - w = 2
+            - x = 1
+            - Each # represents an access level, user or group or other
+            - value of # is sum of r, w and x
 2. __Types of files__
 
     1.  \- : regular file
@@ -639,7 +638,6 @@ $su -
     = value for sticky bit = 1
 
 4. __Default permissions__
-
     - created by root:
         - file : 644
         - dir : 755
@@ -647,7 +645,6 @@ $su -
         - file : 664
         - dir : 775
 5. __Umask value__
-
         - every process has a umask
         - octal bitmask that is used to clear the permission of the new files and directories created by the process
         - if a bit is set in the mask, then the corresponding permission is cleared in new files

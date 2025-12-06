@@ -1,213 +1,198 @@
 ---
 title: Red Hat Enterprise Linux - part 02
-draft: true
+draft: false
 date: 2025-12-03
 tags: [linux,dev]
 ---
-Improve command line productivity
-        - Theory
-            - BASH scripts
-                - using vim editor, extension is **.sh**
-                - script
+## Improve command line productivity
+### Theory
+1. BASH scripts
+    - using vim editor, extension is **.sh**
+        - script example 
+            ```bash
+           #! /bin/bash
+           
+          echo hello world
+          ```
                     
-                    ```bash
-                    #! /bin/bash
+            - give execution permission using `chmod +x test.sh` 
+            - execute the file using `./test.sh`
+        - script
+            ```bash
+           #! /bin/bash
+           
+          if [ 10 == 10 ]
+          then
+          echo they are equal
+          fi 
+          ```
                     
-                    echo hello world
-                    ```
+         - script
+           ```bash
+           #! /bin/bash
+           if [10 == 5]
+           then
+           echo they are equal
+           else
+           echo they are not equal
+           fi
+           ```
                     
-                - give execution permission
+        - complex script
+            - vim userlist
+                ```bash
+               user1
+               user2
+               user3
+               user4
+               ```
+               
+            - vim new.sh
+                ```bash
+                #! /bin/bash
                 
-                   chmod +x test.sh 
+               if [ $# == 0 ]
+               then
+               echo enter the file name
+               elif [ -f $*  ]
+               then
+               for user in $(cat $*)
+               do
+               useradd $user
+               done
+               else
+               echo enter a valid filename
+               fi
+               ```
+                    
+                - chmod +x new.sh
+                - ./new.sh // no file input
+                - ./new.sh userl // invalid filename
+                - ./new.sh  userlist
+                - tail -n 5 /etc/passwd
                 
-                - execute the file
-                
-                   ./test.sh
-                
-                - script
-                    
-                    ```bash
-                    #! /bin/bash
-                    
-                    if [ 10 == 10 ]
-                    then
-                    echo they are equal
-                    fi 
-                    ```
-                    
-                - script
-                    
-                    ```bash
-                    #! /bin/bash
-                    if [10 == 5]
-                    then
-                    echo they are equal
-                    else
-                    echo they are not equal
-                    fi
-                    ```
-                    
-                - complex script
-                    - vim userlist
-                    
-                    ```bash
-                    user1
-                    user2
-                    user3
-                    user4
-                    ```
-                    
-                    - vim new.sh
-                    
-                    ```bash
-                    #! /bin/bash
-                    
-                    if [ $# == 0 ]
-                    then
-                    echo enter the file name
-                    elif [ -f $*  ]
-                    then
-                    for user in $(cat $*)
-                    do
-                    useradd $user
-                    done
-                    else
-                    echo enter a valid filename
-                    fi
-                    ```
-                    
-                    - chmod +x new.sh
-                    - ./new.sh // no file input
-                    - ./new.sh userl // invalid filename
-                    - ./new.sh  userlist
-                    - tail -n 5 /etc/passwd
-                
-            - GREP command
-                - used for pattern filtering
-                
-                e.g. : grep root /etc/passwd
-                
-                - option
-                    - -i // case insensitive
-                    - -v // excluding the lines having the specified string
-                    - -A // extra lines after the matching output
-                    - -B // extra lines before the matching output
-                    - -e // using multiple search strings
-                    - -r // to use directory
-        - Commands
-            - `echo hai`
-            - `echo "hai"` // result wil be same
-            - `echo $(date)` // date is printed
-            - `echo "Today's date is "$(date)`
-            - `echo 'hostname` // prints the hostname, here hostname is treated as a variable
-            - `grep root /etc/passwd`
-            - `grep ^root /etc/passwd` // line start with root
-            - `grep nologin$ /etc/passwd` // line end with no login
-            - `grep -A 2 ^tom /etc/passwd`
-            - `grep -e tom -e root -e apache /etc/passwd`
-            - `grep -r baseurl /etc`
-        - LAB
-    - DAY 02
-    Schedule future tasks
-        - theory
-            - scheduling
-                - **Deferred** user task
-                    - run a command or set of command at a set point in future, called job or task
-                    - the term deferred indicates that these tasks or jobs are going to run in the future
-                    - 'at' package can be used to manage the scheduling
-                    - at package
-                        - at package provides atd , system daemon along with a set of command line tools to interact with the daemon.
-                        - for a default rhel installation, the atd daemon is installed and enabled automatically
-                        - users can queue up jobs for the atd daemon using the at command
-                        - the atd daemon provides 26 queues, a to z, with jobs in alphabetically later queues getting lower system priority
-                    - TIMESPEC command to schedule a new job
-                    - ctrl + D // for finishing the  inputs
-                    - combination examples :
-                        - now +5min
-                        - teatime tomorrow(teatime is 16:00)
-                        - noon +4 days
-                        - 5pm august 3 2021
-                - Scheduling recurring user jobs
-                    - recurring - repeated jobs
-                    - crond daemon, provided by the cronie package, enabled and started by default for recurring jobs
-                    - fields of crontab files
-                        - minutes
-                        - hours
-                        - day of month
-                        - month
-                        - day of week
-                        - command
-                    - field rules
-                        - first five fields use the same syntax rules
-                        - * → don not care or always
-                        - a number specifies number of minutes or hours, a date, or a weekday.
-                        - for week day, Sunday is 0,— 7 also equals monday
-                        - x-y for a range , x to y inclusive
-                        - x,y for list, list can include ranges as well.
-                            - e.g. 5,10-13,17,..
-                        - */x indicate an interval of x, for example, */7 in minute column runs a job every seven minutes.
-                        
-                    - examples
-                        - 0 9 2 2 * /usr/local/bin/yearly_backup
-                            - run the specified path at exactly 9.00 am on feb 2nd , every year
-                        - */5 9-16 * Jul 5 echo "Chime"
-                            - sends an email containing the word chime to the owner of this job, every five minutes between 9 a.m and 5 p.m. on every Friday in July
-                        - 58 23 * * 1-5 /usr/local/bin/daily/_report
-                            - run the command /usr/local/bin/daily_report every weekday at two minutes before midnight.
-                - Recurring system jobs
-                    - recurring jobs of system admins
-                    - best practice is to run these jobs form the system accounts rather than from user accounts.
-                    - do not schedule to run these jobs using the crontab command, but instead use system wide crontab files
-                    - system wide crontab files have and extra field before the command field; the user under whose authority the command should run
-                    - /etc/crontab file has a useful syntax diagram in the included comments
-                    - defined location
-                        - /etc/crontab file
-                        - /etc/cron.d/ directory
-                    - place the custom crontab file in /etc/corn.d to protect it from being overwritten if any package update occurs to the provider of /etc/
-                    - the crontab system also includes repositories for scripts that need to run every hour, day, week and month
-                    - these repositories are directories called:
-                        - /etc/cron.hourly/
-                        - /etc/cron.daily/
-                        - /etc/cron.weekly/
-                        - /etc/cron.monthly/
-                    - these directories contain executable shell scripts
-                - /etc/anacrontab file
-                    - run parts command also  runs the daily , weekly, and monthly jobs, but it is called from /etc/anacrontab config file
-                    - purpose: make sure that important jobs always run, and not skipped accidently , because the system was turned off or hibernating when the job should have been executed.
-                    - fields
-                        - period of days // interval in days for the job that runs on a repeating schedule.
-                        - delay in minutes // amount of time that crond daemon should wait before starting this job
-                        - job identifier // the unique name the job is identified as in the log messages.
-                        - command // the command to be executed
-            - managing temporary files
-                - modern system require large no of temp files and directories
-                - some application use volatile directories under /run to store temp files
-                - if the sys reboots or loses power, the files are removed
-                - it is necessary for these directories and files to be created when they do not exist and for old files to be purged
-                - RHEL has a new tool called **sytemd-tmpfiles**, to manage temporary  directories and files
-                - process
-                    - when systemd starts a system, one of the first service units launched is systemd-tmpfiles-setup
-                    - this service runs the command systemd-tmpfiles —create —remove
-                    - this command reads configuration files from /usr/lib/tmpfiles.d/* .conf, /run/tmpfiles.d/*.conf, and /etc/tmpfiles.d/*.conf
-                    - any files and directories marked for deletion in those config files is removed, and any files and directories marked for creation will be created with the correct permission if necessary
-                - cleaning temp files with sytemd timer
-                    - to ensure that long running systems do not fill up their disks with stale data, a systemd timer unit called systemd-tmpfiles-clean.timer triggers systemd-tmpfiles-clean.service on a regular interval
-                    - which executes the sytemd-tmpfiles —clean command .
-                    - the systemd timer unit config files have a [timer] section that indicate how often tthe service with the same name should be started
-                        - `#sytemctl cat systemd-tmpfiles-clean.timer` // to view contents of the systemd-tmpfilesclean.timer unit config file.
-                - format of the config files of **systemd-tmpfiles**
-                    
-                    ```bash
-                    Type, Path, Mode , UID, GID , Age, Argument
-                    ```
-                    
-                - examples
-                    - d /run/systemd/seats 0755 root root
-                        - when creating files and directories, create the /run/systemd/seats directory if it does not yet exist. owned by the user root and group root, with permissions set to rwxr-xr-x
-                    - D /home/student 0700 student student 1d
-                        - create /home/student directory if it does not yet exist. if it does, empty it of all contents. When systemd-tmpfiles —clean is run, remove all files which have not been accessed, changed, or modified in more than one day.
-                    - L /run/fstablink —root root -/etc/fstab
-                        - create the symbolic link /run/fstablink pointing to /etc/fstab
+2. GREP command
+    - used for pattern filtering  
+        e.g. : grep root /etc/passwd
+    - option
+        - -i // case insensitive
+        - -v // excluding the lines having the specified string
+        - -A // extra lines after the matching output
+        - -B // extra lines before the matching output
+        - -e // using multiple search strings
+        - -r // to use directory
+
+### Commands
+
+- `echo hai`
+- `echo "hai"` // result wil be same
+- `echo $(date)` // date is printed
+- `echo "Today's date is "$(date)`
+- `echo 'hostname` // prints the hostname, here hostname is treated as a variable
+- `grep root /etc/passwd`
+- `grep ^root /etc/passwd` // line start with root
+- `grep nologin$ /etc/passwd` // line end with no login
+- `grep -A 2 ^tom /etc/passwd`
+- `grep -e tom -e root -e apache /etc/passwd`
+- `grep -r baseurl /etc`
+
+## Schedule future tasks
+### Theory
+1. Scheduling
+    - **Deferred** user task
+        - run a command or set of command at a set point in future, called job or task
+        - the term deferred indicates that these tasks or jobs are going to run in the future
+        - 'at' package can be used to manage the scheduling
+        - at package
+            - at package provides atd , system daemon along with a set of command line tools to interact with the daemon.
+            - for a default rhel installation, the atd daemon is installed and enabled automatically
+            - users can queue up jobs for the atd daemon using the at command
+            - the atd daemon provides 26 queues, a to z, with jobs in alphabetically later queues getting lower system priority
+        - TIMESPEC command to schedule a new job
+        - ctrl + D // for finishing the  inputs
+        - combination examples :
+            - now +5min
+            - teatime tomorrow(teatime is 16:00)
+            - noon +4 days
+            - 5pm august 3 2021
+   - Scheduling recurring user jobs
+        - recurring - repeated jobs
+        - crond daemon, provided by the cronie package, enabled and started by default for recurring jobs
+        - fields of crontab files
+            - minutes
+            - hours
+            - day of month
+            - month
+            - day of week
+            - command
+        - field rules
+            - first five fields use the same syntax rules
+            - * → don not care or always
+            - a number specifies number of minutes or hours, a date, or a weekday.
+            - for week day, Sunday is 0,— 7 also equals monday
+            - x-y for a range , x to y inclusive
+            - x,y for list, list can include ranges as well.
+            - e.g. 5,10-13,17,..
+            - */x indicate an interval of x, for example, */7 in minute column runs a job every seven minutes.*
+        - examples
+            - `0 9 2 2 * /usr/local/bin/yearly_backup`  
+              run the specified path at exactly 9.00 am on Feb 2nd, every year
+            - `*/5 9-16 * Jul 5 echo "Chime"` 
+              sends an email containing the word chime to the owner of this job, every five minutes between 9 a.m and 5 p.m. on every Friday in July
+            - `58 23 * * 1-5 /usr/local/bin/daily/_report`  
+              run the command /usr/local/bin/daily_report every weekday at two minutes before midnight.
+    - Recurring system jobs
+        - recurring jobs of system admins
+        - best practice is to run these jobs form the system accounts rather than from user accounts.
+        - do not schedule to run these jobs using the crontab command, but instead use system wide crontab files
+        - system wide crontab files have and extra field before the command field; the user under whose authority the command should run
+        - /etc/crontab file has a useful syntax diagram in the included comments
+        - defined location
+           - /etc/crontab file
+           - /etc/cron.d/ directory
+        - place the custom crontab file in /etc/corn.d to protect it from being overwritten if any package update occurs to the provider of /etc/
+        - the crontab system also includes repositories for scripts that need to run every hour, day, week and month
+        - these repositories are directories called:
+            - /etc/cron.hourly/
+            - /etc/cron.daily/
+            - /etc/cron.weekly/
+            - /etc/cron.monthly/
+        - these directories contain executable shell scripts
+    - /etc/anacrontab file
+        - run parts command also  runs the daily , weekly, and monthly jobs, but it is called from /etc/anacrontab config file
+        - purpose: make sure that important jobs always run, and not skipped accidently , because the system was turned off or hibernating when the job should have been executed.
+        - fields
+            - period of days // interval in days for the job that runs on a repeating schedule.
+            - delay in minutes // amount of time that crond daemon should wait before starting this job
+            - job identifier // the unique name the job is identified as in the log messages.
+            - command // the command to be executed
+    - managing temporary files
+        - modern system require large no of temp files and directories
+        - some application use volatile directories under /run to store temp files
+        - if the sys reboots or loses power, the files are removed
+        - it is necessary for these directories and files to be created when they do not exist and for old files to be purged
+        - RHEL has a new tool called **sytemd-tmpfiles**, to manage temporary  directories and files
+        - process
+            - when systemd starts a system, one of the first service units launched is systemd-tmpfiles-setup
+            - this service runs the command systemd-tmpfiles —create —remove
+            - this command reads configuration files from /usr/lib/tmpfiles.d/* .conf, /run/tmpfiles.d/*.conf, and /etc/tmpfiles.d/*.conf
+            - any files and directories marked for deletion in those config files is removed, and any files and directories marked for creation will be created with the correct permission if necessary
+        - cleaning temp files with sytemd timer
+            - to ensure that long running systems do not fill up their disks with stale data, a systemd timer unit called systemd-tmpfiles-clean.timer triggers systemd-tmpfiles-clean.service on a regular interval
+            - which executes the `sytemd-tmpfiles —clean` command.
+            - the systemd timer unit config files have a [timer] section that indicate how often tthe service with the same name should be started
+                - `#sytemctl cat systemd-tmpfiles-clean.timer` // to view contents of the systemd-tmpfilesclean.timer unit config file.
+        - format of the config files of **systemd-tmpfiles**
+            ```bash
+           Type, Path, Mode , UID, GID , Age, Argument
+           ```
+            - examples
+                - `d /run/systemd/seats 0755 root root` 
+                  when creating files and directories, create the /run/systemd/seats directory if it does not yet exist. owned by the user root and group root, with permissions set to rwxr-xr-x
+                - `D /home/student 0700 student student 1d`  
+                  create /home/student directory if it does not yet exist. if it does, empty it of all contents. When systemd-tmpfiles —clean is run, remove all files which have not been accessed, changed, or modified in more than one day.
+                - `L /run/fstablink —root root -/etc/fstab`  
+                  create the symbolic link /run/fstablink pointing to /etc/fstab
             - configuration file precedence
                 - config files can exist in three places
                     - **/etc/tmpfiles.d/*.conf**
@@ -216,22 +201,23 @@ Improve command line productivity
                 - **/usr/lib/tmpfiles.d/** are provided by relevant RPM packages
                 - **/run/tmpfiles.d/** are themselves volatile files, normally used by daemons to manage their own runtime temp files
                 - files under **/etc/tmpfiles.d/** are meant for administrators to configure custom temporary locations, and to override vendor provided defaults
-        - commands
-            - inspecting and managing deferred user jobs
-                - `atq` or `at -l` // to get an overview for the pending jobs for the current user
-                - `at -c JOBNUMBER` // to inspect the actual commands that will run when a job is executed
-                - `atrm JOBNUMBER` // command removes a scheduled job before its execution
-            - crontab
-                - `crontab -l` // to list the jobs for the current user
-                - `crontab -r` // to remove all jobs for the current user
-                - `crontab -e` // edit jobs for the current user.
-                - `crontab filename` // remove all jobs, and replace with the jobs read form file name. If no file is specified, stdin is used.
-            - cleaning and creating temporary files mannualy
-                - `systemd-tmpfiles —create` // creating files and directories
-                - `systemd-tmpfiles —clean` // purge all files which have not been accessed , changed or modified more recently than the maximum age defined in the config file.
-        - LAB
-    - DAY 03
-    Tuning System Performance
+
+### commands
+            
+- Inspecting and managing deferred user jobs
+- `atq` or `at -l` // to get an overview for the pending jobs for the current user
+- `at -c JOBNUMBER` // to inspect the actual commands that will run when a job is executed
+- `atrm JOBNUMBER` // command removes a scheduled job before its execution
+- Crontab
+- `crontab -l` // to list the jobs for the current user
+- `crontab -r` // to remove all jobs for the current user
+- `crontab -e` // edit jobs for the current user.
+- `crontab filename` // remove all jobs, and replace with the jobs read form file name. If no file is specified, stdin is used.
+- Cleaning and creating temporary files mannualy
+- `systemd-tmpfiles —create` // creating files and directories
+- `systemd-tmpfiles —clean` // purge all files which have not been accessed , changed or modified more recently than the maximum age defined in the config file.
+
+## Tuning System Performance
         - theory
             - **tuned daemon**
                 - applies tuning adjustments both statically and dynamically, via tuning profiles

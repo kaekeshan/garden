@@ -1,5 +1,5 @@
 ---
-title: What is HTML?
+title: Basics of HTML and CSS
 description: Hyper Text Markup Language
 draft: false 
 tags: ['html','dev']
@@ -114,3 +114,264 @@ Semantic elements clearly describe their purpose both to the browser and to deve
 <nav>Home | About | Contact</nav>
 <main>Welcome to my website!</main>
 ```
+
+
+### Common basic tags
+- heading tags
+    - start from `<h1>` - `<h6>`
+        
+- paragraph tag
+    - tag is `<p>` and `</p>` , // for differentiating text into different paragraphs.
+        
+- anchor tag
+    - tag is `<a>` and `</a>`, attributes(additional information associated to tag) include :
+        -  target = "_blank" // open the link in new tab 
+        - href = "" // for def hyperlink
+        - `<a href="url/path" target="_blank">string</a>`
+        
+- button tag
+    - creates a clickable button. use tag `<button>_button_name_string_</button>`
+    - easy way to associate a button to a hyperlink is using the button tag as nesting inside the anchor tag
+
+ ```html
+<a href="www.google.com" target="_blank"><button>google.com</button></a>
+```
+        
+- bold tag 
+    - `<b>string</b>` // to make bold
+- italic tag
+    - `<i> italic text </i>`
+- image tag  
+    // to add/embedd image into the html file  
+    // adding a closing tag makes the code redundant., hence opening tag and attributes inside it is enough to specify the appropriate information.  
+
+use `<img> .. </img>`
+
+```html
+<img src="url for image">
+```
+        
+- video tag // to embed a video
+    - tag for video is `<video> .. </video>`
+        
+```html
+<video control width="" height="">
+<source src="link to video">
+</video>
+```
+        
+- audio tag // to embed audio and it is similar to video
+        
+```html
+<audio controls>
+<source src="link to audio file">
+</audio>
+```
+        
+- input tag
+
+enables interaction with user, 
+input tag uses `<input>`, no closing tags, attributes will provide required information  
+    - type="" // button, checkbox, text, etc..  
+    - type specifies the type of input the site should expect.
+        
+- select tag
+
+we have `<select> .. </select>` and inside we have `<option> .. </option>`
+        
+```html
+<input type="text" placeholder="choose an item">
+<select>
+<option> item 1 </option>
+<option> item 2 </option>
+<option> item 3 </option>
+</select>
+```
+        
+- we have 'disabled' attribute for option tag
+
+![](../assets/html/Untitled.png)
+        
+- table tag // to format, or embed tabular data into the webpage
+        
+```html
+<table>
+        <thead>
+         // automatically bolded text as head for table
+          <tr> // one row
+        	 <th> one column </td>
+           <th> two column </td>
+           <th> three column </td>
+          </tr>
+        
+        <thead>
+        <tbody> // body of table
+          <tr> // one row
+        	 <td> one column </td>
+           <td> two column </td>
+           <td> three column </td>
+          </tr>
+          <tr> // two row
+        	 <td> one column </td>
+           <td> two column </td>
+           <td> three column </td>
+          </tr>
+        </tbody>
+</table>
+```
+Table have attributes like border, color etc.
+
+### Basics of CSS
+
+ - Adds a touch of life to the structure coded by html and it makes the webpage more presentable.
+
+- types of CSS applied in a file
+    1. external // an external file
+    2. internal // on the head section of html file
+    3. inline // direct on the element  
+- Concepts
+    - linking to the html file, if external style sheet is used  
+    `<link href="absolute_path_of_css_file">`
+    - link tag can also be used for : 
+        - linking style sheet
+        - for prefetching resources
+        - can be used for metadata  
+    - hence we need to specify more information  
+    `<link href="path to file" rel="stylesheet">` // the relationship of this file is stylesheet
+        
+- Structure  
+
+The styles applied to a targeted tag, all the nested tags inside that targeted tag, we call it children, will inherit the style properties, unless children have their own styling.        
+CSS specificity : it allows the browser to take the correct styles for a tag if there is a conflict.
+        
+`TAG_NAME {
+    property_name : property_value;
+}`        
+
+- values are not written inside quotes in normal case.
+- CSS takes priority on top down fashion, i.e. if more priority is assigned as we go down.  
+
+example: here black will have more priority than red, hence black color will be applied to the tag, p under consideration.  
+![](../assets/html/Untitled%201.png)
+        
+- Classes
+        
+Used to group elements. Since we have finite no of tags, and styling by tag name will exhaust out options for different styles, we use class to group elements which we assign common properties.  
+
+classes are specified inside the tag opening in html file as **class = "",  
+i.e. < tagname class="classname" >**  
+
+class names are specified using, dot operator. i.e. `.class_name { property_name : property_value; }`
+        
+- IDs
+
+similar concept as classes, expect difference in symbol. in c.s.s., we specify the id by a # as prefix. Every id should be unique, it is bad practice to use the same id name multiple times.  
+
+`#id_name { property_name : property_value; }`
+
+- position
+    - static
+        - default placement, goes with default html element flow
+    - relative
+        - gets access to four different directions
+        - value 0 is the original position
+        
+        ```html
+        top :  // from top
+        bottom : // from bottom
+        left : // from left
+        right : // from right
+        ```
+        
+    - absolute
+        - element can not go out of the parent element
+        - we can move it inside the parent element
+        
+    - fixed
+        - it places the element relative to the screen or view port
+    - sticky
+        - adding top 0 will keep the element stick to the top of the webpage as we scroll
+- auto and 100%
+    - auto : adjusting to the view port
+        - use whatever space available
+    - 100% : 100% of the parent, will give scrolling
+- CSS units on view port
+    - vh  : view port height // sets the height relative to the view port
+    - vw : view port width
+    - vmax : view port maximum
+    - vmin: view port minimum
+- layout
+    - display: flex
+        - called a flex box
+        - justify-content // is accessible
+        - align-items // is accessible
+
+---
+
+- setting up header, html
+    
+```html
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a class="logo-text" href="#">TITLE</a>
+        </div>
+        <div class="login">
+            <!-- setting tabs -->
+            <form clas="login">
+                <table class="logo-controls">
+                    <tr>
+                        <td>Username</td>
+                        <td>password</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" /></td>
+                        <td><input type="password" /></td>
+                        <td><input type="submit" value="login" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Forgot password</td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+```
+    
+- css
+        
+```html
+        * {
+        	margin : 0;
+        	padding : 0;
+        	box-style : border-box;
+         }
+        
+        .header {
+        	background : #3b5998;
+        	width : 100%;
+        	height : 85px;
+        }
+        
+        .logo {
+        	width : 50%;
+        }
+        
+        .login {
+        	width : 50%;
+          float : left; // since div are arranged automatically dn to previous elts
+        }
+        
+        .logo-text {
+         color: #fff;
+         font-size : 35px;
+         font-weight : bold;
+         text-decoration : none;
+        
+        }
+        
+```
+        

@@ -15,7 +15,7 @@ A decision maker while solving a real life problem should examine the problem in
 
 ---
 
-consider a problem where an investor seeking advice for investments in three alternatives: Stock Market, Real Estate, and Bank Deposit.
+Consider a problem where an investor seeking advice for investments in three alternatives: Stock Market, Real Estate, and Bank Deposit.
 
 To suggest an acceptable solution, we have to consider certain quantitative factors like financial ratios from the balance sheets of several firms whose stock are under consideration; real estate companies' cash flows and rates of return for the investment property; how much the investment will be worth in future when deposited at a bank at a given interest rate for certain number of years, need to be examined. 
 
@@ -27,7 +27,7 @@ However, along with these quantitative factors, qualitative factors like weather
 
 Operation Research facilitates the comparison of every possible alternatives(course of actions) to know the potential outcomes, permits the examination of the sensitivity of the solution to changes or errors in numerical values, and encourages rational decision making based on the best available approaches and/or techniques.
 
-However it must be emphasized that, timely and competent decisions should be an aid to the decision-maker's judgement, not a substitute for it.
+However it must be emphasized that, timely and competent decisions should be an aid to the decision-maker's judgment, not a substitute for it.
 
 That is, not to say, that the management decision making is simply about the application of operations research techniques and/or approaches.
 
@@ -75,7 +75,7 @@ In the same year, India along with Japan became a member of the International Fe
 
 ### Scope of Operational Research
 
-- Agriculture : O.R. methodologies can be used to manage different problems in agriculture field and to maximize agriculture output of a country since population is increasing day by day. Different problems like climate conditions, optimal water distribution form different resources etc can be managed by O.R. models.
+- Agriculture : O.R. Methodologies can be used to manage different problems in agriculture field and to maximize agriculture output of a country since population is increasing day by day. Different problems like climate conditions, optimal water distribution form different resources etc can be managed by O.R. models.
 
 - Finance Planning : planning for economic development of a firm , or a nation itself can be managed using  O.R. techniques.
 

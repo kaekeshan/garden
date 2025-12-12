@@ -1,3 +1,61 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+/* 1. GLOBAL VARIABLES (Theme Switching) */
+:root {
+  --boldWeight: 700;
+  /* Default Dark Mode Colors */
+  --nav-hover: #FFFFFF; 
+  --tag-bg: rgba(255, 255, 255, 0.1);
+  --tag-color: #ffb86c; /* Keeping your orange accent for tags */
+}
+
+/* 2. LIGHT MODE OVERRIDES */
+[saved-theme="light"] {
+  /* In light mode, white text is invisible, so we use a dark gray or orange */
+  --nav-hover: #ffb86c; 
+  --tag-bg: rgba(0, 0, 0, 0.08);
+  --tag-color: #e67e22; /* A slightly darker orange for better legibility on white */
+}
+
+/* 3. EXPLORER / NAVIGATION */
+.explorer li {
+  padding-top: 4px; 
+  padding-bottom: 4px;
+}
+
+.explorer li > a, 
+.explorer .folder-title {
+  font-size: 1em; 
+  display: block; 
+}
+
+/* Hover effect using the variable defined above */
+.explorer li > a:hover, 
+.explorer .folder-button:hover .folder-title {
+  color: var(--nav-hover) !important;
+}
+
+/* 4. TYPOGRAPHY (Bold) */
+strong, b {
+  font-weight: var(--boldWeight) !important;
+}
+
+/* 5. TAGS */
+.tag-link {
+  /* Uses variable to switch between light/dark automatically */
+  color: var(--tag-color) !important;   
+  background-color: var(--tag-bg) !important;
+  
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.8em;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect for tags */
+.tag-link:hover {
+  background-color: #ffb86c !important;
+  color: #282a36 !important; /* Dark text for contrast on the orange hover */
+}

@@ -1,4 +1,3 @@
-
 ---
 title: Neo Vim Setup
 draft: false

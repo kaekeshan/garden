@@ -1,5 +1,5 @@
 ---
-title: Vim - LSP
+title: Neovim - LSP
 draft: false
 tags: ['vim','neovim','lua','lsp']
 date: 2025-11-30

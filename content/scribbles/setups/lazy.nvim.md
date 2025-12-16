@@ -1,5 +1,5 @@
 ---
-title: Lazy Vim Package Manager
+title: NeoVim - Lazy Package Manager
 draft: false
 tags: ['vim','neovim','lua']
 date: 2025-12-01

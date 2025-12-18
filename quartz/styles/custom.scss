@@ -7,6 +7,9 @@
   --nav-hover: #FFFFFF; 
   --tag-bg: rgba(255, 255, 255, 0.1);
   --tag-color: #ffb86c; /* Keeping your orange accent for tags */
+  /* This color is subtle, neutral, and professional */
+  --heading-color: #E4E4E7; 
+  --heading-muted: #fb8500;
 }
 
 /* 2. LIGHT MODE OVERRIDES */
@@ -58,4 +61,21 @@ strong, b {
 .tag-link:hover {
   background-color: #ffb86c !important;
   color: #282a36 !important; /* Dark text for contrast on the orange hover */
+}
+
+details {
+  padding-top: 0.7rem;
+}
+
+h1, h2, h3 {
+  color: var(--heading-color);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+h4, h5, h6 {
+  color: var(--heading-muted);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
 }

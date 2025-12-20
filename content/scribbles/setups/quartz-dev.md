@@ -28,7 +28,7 @@ Go to the quartz implementation directory and execute the following commands
 ```text
 docker build --tag my-site .
 ```
->[!info] the dot represents current directory and it can be replaced with [absolute or relative paths](/tags/linux)
+>[!info] the dot represents current directory and it can be replaced with [absolute or relative paths](/compiles/linux/linux_administration#module-01---files-and-directories)
 This will create the build in the Docker application like below,  
 ![quartz-build-example](../../assets/quartz/docker-build-cli.png)  
 ```text

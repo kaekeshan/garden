@@ -4,8 +4,7 @@ tags: [pwsh, cmd, linux]
 date: 2025-11-30
 ---
 
-<details>
-<summary>Windows CMD</summary>
+### Windows Command Line 
 
 #### Files & Folders 
 <!-- case 1 -->
@@ -50,13 +49,9 @@ del $FILE_NAME
 ```
 </details>
 
-
-</details>
-
 ---
 
-<details>
-<summary>Windows PowerShell</summary>
+### Windows Powershell
 
 #### Paths
 
@@ -76,7 +71,7 @@ del $FILE_NAME
 <!-- case 1 -->
 
 <details>
-<summary> Copy the a file </summary>  
+<summary> Copy the file </summary>  
 
 ```bash
 Copy-Item -Path <source> -Destination <destination>
@@ -86,7 +81,7 @@ Copy-Item -Path <source> -Destination <destination>
 <!-- case 2 -->
 
 <details>
-<summary> Remove the a file </summary>  
+<summary> Remove the file </summary>  
 
 ```bash
 Remove-Item -Path "C:\path\to\your\file.txt"
@@ -96,7 +91,7 @@ Remove-Item -Path "C:\path\to\your\file.txt"
 <!-- case 3 -->
 
 <details>
-<summary> Rename the a file </summary>  
+<summary> Rename the file </summary>  
 
 ```bash
 Rename-Item -Path "C:\path\to\your\file.txt" -Newname "updatedname"
@@ -133,5 +128,7 @@ Remove-Item C:\path\to\non\empty\folder -Recurse -Force
 ```
 </details>
 
+---
 
-</details>
+### Docker Command Line Interface
+ 

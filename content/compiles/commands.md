@@ -1,6 +1,6 @@
 ---
 title: Terminal Toolkit
-tags: [pwsh, cmd, linux]
+tags: [pwsh, cmd, linux, docker]
 date: 2025-11-30
 ---
 
@@ -132,3 +132,114 @@ Remove-Item C:\path\to\non\empty\folder -Recurse -Force
 
 ### Docker Command Line Interface
  
+<!-- case 1 -->
+
+<details>
+<summary> Create a new container </summary>  
+
+```bash
+docker run -it image-name 
+```
+- `it` - opens interactive shell
+- check if image is present locally, else fetch it from [docker hub](https://hub.docker.com)
+</details>
+
+<details>
+  <summary>List active containers</summary>  
+
+```bash
+docker container ls
+```
+</details>
+
+<details>
+  <summary>List all (non-active/active) containers</summary>  
+
+```bash
+docker container ls -a
+```
+</details>
+
+<details>
+  <summary>Run a container</summary>  
+
+```bash
+docker start container-name
+```
+</details>
+
+</details>
+
+<details>
+  <summary>Terminate a container</summary>  
+
+```bash
+docker stop container-name
+```
+</details>
+
+<details>
+  <summary>Execute a command inside a container</summary>  
+
+```bash
+docker exec [-it] container-name command
+```
+</details>
+
+<details>
+  <summary>To list Docker Images</summary>
+  
+```bash
+docker images
+```
+</details>
+
+<details>
+  <summary>To map ports b/w host and image</summary>
+  
+```bash
+docker run -p base-port:image-port image-name
+```
+</details>
+
+<details>
+  <summary>To map environmental variables b/w host and image</summary>
+  
+```bash
+docker run -e key1=value1 -e key2=value2 image-name
+```
+</details>
+
+<details>
+  <summary>Containerize an Image</summary>
+
+- create a `Dockerfile`. Refer this [page](/scribbles/setups/quartz-dev) for example Dockerfile. 
+```Dockerfile
+	FROM ubuntu
+	// run inside image
+	RUN command
+	// copy code repo
+	COPY source destination
+	// example copy commands
+	COPY package.json package.json
+    COPY main.js main.js
+    ENTRYPOINT ["entry"]
+```
+
+- build the image 
+
+```bash
+Docker build -t image-name dockerfile-folder
+```
+
+- example
+
+```bash
+Docker build -t test-img .
+```
+- `t` - tag the image so that it can be used along with `start` and `stop` commands
+</details>
+
+
+
+

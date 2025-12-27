@@ -4,14 +4,14 @@ title: Puthenchery Lyrics
 tags: [music]
 date: 2025-11-30
 ---
-Initiative to combine lyrics of Gireesh Puthenchery 
 
-Filmography is referenced from [here](https://docs.google.com/spreadsheets/d/1ZA4t3zcbSHTcXzb_YXgDHSXe0T-WK0SaownZNWTI4cs/edit#gid=0)
+The lyrics of Gireesh Puthenchery has a special place for me. This page is dedicated to collecting his lyrics.  
+His filmography can be found in this [page](/compiles/puthenchery_filmography) and the songs can be found in this [YouTube playlist](https://www.youtube.com/playlist?list=PL2Z93NlGm41MVo5xkgB8qmLW1vHyaxQj-).
 
 <details>
 <summary>ജൻമ്മാന്തരങ്ങളിൽ - എൻക്വയറി</summary>
 <pre>
-<i>missing lyrics </i>
+<i>missing lyrics  </i>
 </pre>
 </details>
 

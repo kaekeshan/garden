@@ -5,8 +5,7 @@ tags: [music]
 date: 2025-11-30
 ---
 
-The lyrics of Gireesh Puthenchery has a special place for me. This page is dedicated to collecting his lyrics.  
-His filmography can be found in this [page](/compiles/puthenchery_filmography) and the songs can be found in this [YouTube playlist](https://www.youtube.com/playlist?list=PL2Z93NlGm41MVo5xkgB8qmLW1vHyaxQj-).
+The lyrics of Gireesh Puthenchery has a special place for me. This page is dedicated to collecting his lyrics. His filmography can be found in this [page](/compiles/puthenchery_filmography) and the songs can be found in this [YouTube playlist](https://www.youtube.com/playlist?list=PL2Z93NlGm41MVo5xkgB8qmLW1vHyaxQj-).
 
 <details>
 <summary>ജൻമ്മാന്തരങ്ങളിൽ - എൻക്വയറി</summary>

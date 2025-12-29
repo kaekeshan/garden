@@ -240,6 +240,28 @@ Docker build -t test-img .
 - `t` - tag the image so that it can be used along with `start` and `stop` commands
 </details>
 
+<details>
+  <summary>Check if docker can identify Nvida GPU drivers</summary>
+  
+```bash
+docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
+```
+</details>
 
+<details>
+  <summary>Create from a `docker-compose.yaml` file</summary>
+ 
+ ```bash
+ docker compose up -d
+ ```
+</details>
+
+<details>
+  <summary>Install Open-webui and Ollama as single image</summary>
+ 
+ ```bash
+ docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
+ ```
+</details>
 
 

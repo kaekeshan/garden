@@ -61,4 +61,4 @@ docker build --tag my-site . && my-site
 ```
 >[!note] Image needs to be rebuilt for any configuration file changes to take effect. Any file deletion under /content might cause the deployment to terminate. In that case, you can redeploy using the alias. 
 
->[!info] For more docker commands, refer [docker CLI toolkit](/compiles/commands#docker-command-line-interface)
+>![info] For more docker commands, refer [docker CLI toolkit](/compiles/commands#docker-command-line-interface)

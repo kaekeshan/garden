@@ -22,7 +22,6 @@
   --alias-color: #4e4e4e;
   --heading-color: #27272A; 
   --heading-muted: #B15C00;
-
 }
 
 /* 3. EXPLORER / NAVIGATION */
@@ -74,6 +73,9 @@ a.internal.alias {
   text-decoration: underline;
 }
 
+a.internal {
+ background-color: transparent;
+}
 
 details {
   padding-top: 0.7rem;

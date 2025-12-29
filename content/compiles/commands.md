@@ -264,4 +264,238 @@ docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
  ```
 </details>
 
+---
+
+### Arch Linux Commands
+
+<details>
+  <summary>Updating the packages</summary>
+ 
+```bash
+pacman -Syu
+```
+</details>
+
+<details>
+  <summary>Installing package(s)</summary>
+
+```bash
+pacman -S package1 package2
+```
+</details>
+
+<details>
+  <summary>Installing .pkg.tar.zst packages using Pacman</summary>
+ 
+ ```bash
+pacman -U [-noconfirm] <file-name.pkg.tar.zst>
+ ```
+</details>
+
+<details>
+  <summary>Search for an installed package using Pacman</summary>
+
+```bash
+pacman -Q | grep <pattern/package_name>
+```
+</details>
+
+<details>
+  <summary>Update the name or move a file or directory</summary>
+ 
+ ```bash
+mv source destination
+ ```
+</details>
+
+
+<details>
+  <summary>Copy a file or directory</summary>
+
+```bash
+cp source destination
+```
+</details>
+
+<details>
+  <summary>Extracting a zip files</summary>
+
+```bash
+unzip zipfile.zip -d output-directory 
+```
+</details>
+
+
+<details>
+  <summary>Update font cache</summary>
+ 
+```bash
+fc-cache -fv
+```
+</details>
+
+
+<details>
+  <summary>Remove non empty directory</summary>
+ 
+```bash
+rm -r directory-name
+```
+</details>
+
+<details>
+  <summary>Find a file in the system</summary>
+ 
+```bash
+[sudo] find <path> -name name-or-extension
+```
+</details>
+
+<details>
+  <summary>Changing the default terminal setting for Gnome console</summary>
+
+```bash
+nvim ~/.bashrc
+```
+![.bashrc](../assets/bash/bashrc.png)
+
+```text
+\u: Username
+\h: Hostname up to the first .
+\w: Current working directory
+\A: Time in 24-hour format (HH)
+\[\e[31m\]: Start of color sequence (red in this case)
+\[\e[32m\]: Start of color sequence (green in this case)
+\[\e[0m\]: Reset color to default
+```
+</details>
+
+
+<details>
+  <summary>Creating a desktop launcher for any executable</summary>
+
+- user specific
+```bash
+nvim ~/.local/share/applications/appname.desktop
+```
+
+- system specific
+```bash
+nvim /user/share/applications/appname.desktop
+```
+
+Contents of appname.desktop
+
+```bash
+[Desktop Entry]
+Version=1.0
+Name=Hello World
+Comment=Prints Hello, World! to the terminal
+Exec=/home/username/hello-world.sh
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+Categories=Utility;
+```
+
+- make the file executable
+
+```bash
+chmode +x path/to/appname.desktop
+```
+</details>
+
+<details>
+  <summary>Installing patch for Suckless terminal</summary>
+  
+```bash
+# Clone the suckless.org repository for the st terminal emulator
+git clone https://git.suckless.org/st
+
+# Navigate into the cloned repository directory
+cd st
+
+# Create a new directory to store patches
+mkdir patches
+
+# Download a specific patch file from a URL (replace with actual URL)
+wget url-to-patch-file.diff
+
+# Apply the downloaded patch to the st codebase, assuming it's a standard patch
+patch -p1 < patch-file-name
+
+# Move the original patch file into the patches directory (in case we want to revert it later)
+mv patch-file.diff patches/
+
+# Remove the config.h file (assuming it was created by the previous patch and no longer needed)
+rm config.h
+
+# Clean and install the st terminal emulator using sudo
+sudo make clean install
+```
+</details>
+
+<details>
+  <summary>Clean up the system</summary>
+ 
+- remove orphaned packages
+```bash
+sudo pacman -Rns $(pacman -Qtdq)
+```
+
+- clear package cache
+```bash
+sudo paccache -r  
+```
+
+- clean package database
+```bash
+sudo pacman -Sc
+```
+- remove unused configuration files
+```bash
+sudo find /etc -name "*.pacnew" -or -name "*.pacsave" -or -name "*.pacorig" -exec rm -i {} \;
+```
+
+- check for broken packages
+```bash
+lddtree -l -R /usr/lib /usr/bin /usr/sbin 2>/dev/null | grep 'not found'
+```
+
+- clean up logs
+```bash
+sudo journalctl --vacuum-time=2weeks
+sudo journalctl --vacuum-size=100M
+```
+
+- remove temporary files
+```bash
+sudo rm -rf /tmp/*
+```
+</details>
+
+<details>
+  <summary>Setting the refresh rate for external monitor</summary>
+
+- Use the `cvt` command to generate a modeline for your desired resolution and refresh rate.  
+For example, for a 1920 x 1080 resolution at 100hz  
+
+```bash
+cvt 1920 1080 100
+# output
+1920x1080 99.90 Hz (CVT) hsync: 114.50 kHz; pclk: 285.50 MHz
+Modeline "1920x1080_100.00"  285.50  1920 2064 2264 2608  1080 1083 1088 1160 -hsync +vsync
+```
+
+- Now add the mode to display
+```bash
+xrandr --newmode "1920x1080_100.00"  285.50  1920 2064 2264 2608  1080 1083 1088 1160 -hsync +vsync
+xrandr --addmode HDMI-1 "1920x1080_100.00" #replace HDMI-1 with correct output name for the display
+```
+
+- Set the display to use the new mode
+```bash
+xrandr --output HDMI-1 --mode "1920x1080_100.00"
+```
+</details>
 

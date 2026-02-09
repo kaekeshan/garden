@@ -24,3 +24,7 @@ date: 2025-12-06
 > The Komaram - 2024-05-16
 
 ![the_komaram](../../assets/DA/the_komaram.jpg)
+
+> The Observer - 2025-02-09
+
+![the observer](../../assets/DA/the_observer.jpg)

@@ -25,6 +25,6 @@ date: 2025-12-06
 
 ![the_komaram](../../assets/DA/the_komaram.jpg)
 
-> The Observer - 2025-02-09
+> The Observer - 2026-02-09
 
 ![the observer](../../assets/DA/the_observer.jpg)

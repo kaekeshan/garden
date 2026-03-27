@@ -1,7 +1,7 @@
 
 ---
 title: Puthenchery Lyrics
-tags: [music]
+tags: [music,Compiles]
 date: 2025-11-30
 ---
 

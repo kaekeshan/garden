@@ -2,7 +2,7 @@
 title: Gireesh Puthenchery Filmography
 draft: false
 date: 2025-12-27
-tags: [music]
+tags: [music,Compiles]
 ---
 
 ## 1989 - 1992

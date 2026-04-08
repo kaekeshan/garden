@@ -1,5 +1,5 @@
 ---
-title: Marma Kalai 
+title: Kalaripayattu 
 tags: [health,martial-art,study,Compiles]
-date: 2026-27-03
+date: 2026-03-27
 ---

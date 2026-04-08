@@ -3,7 +3,7 @@ title: 12 Padu Marma According to Siddha System
 description: A study into Marma Points 
 draft: false 
 tags: ['study','health','martial-art']
-date: 2026-27-03
+date: 2026-03-27
 ---
 
 >[!info] All the information are referenced from the book Secrets of Marma: The Lost Secrets of Ayurveda by Dr. Avinash Lele, Dr. Subhash Ranade, and David Frawley.  

@@ -37,6 +37,8 @@ tags: [practice,health,martial-art,study,Compiles]
 
 ![](../../../assets/kalari/varmakalai/neck-lock/3.png)
 
+![](../../../assets/kalari/varmakalai/neck-lock/3.2.png)
+
 ![](../../../assets/kalari/varmakalai/neck-lock/3.1.png)
 
 തള്ള വിരൽ '**അമൃതലാന്തി**' മർമ്മത്തിൽ അമർത്തി കൈ അയച്ചു തിരിച്ചു എതിരാളിയെ വീഴ്ത്തുക

@@ -128,6 +128,17 @@ Remove-Item C:\path\to\non\empty\folder -Recurse -Force
 ```
 </details>
 
+
+<!-- case 7 -->
+
+<details>
+<summary> Create a empty file </summary>  
+
+```bash
+ni filename.extension
+```
+</details>
+
 ---
 
 ### Docker Command Line Interface

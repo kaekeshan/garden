@@ -1,7 +1,7 @@
 ---
 title: Neovim - Setup
 draft: false
-tags: ['vim','neovim','lua','dev']
+tags: ['setups','vim','neovim','lua','dev']
 date: 2025-11-30
 ---
 

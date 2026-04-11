@@ -2,7 +2,7 @@
 title: Quartz with Docker
 draft: false
 date: 2025-12-16
-tags: [dev,docker]
+tags: [setups,dev,docker]
 ---
 ### Local Docker Setup
 Install Docker app locally - [Docker file download](https://www.docker.com/products/docker-desktop/) and start the docker engine.

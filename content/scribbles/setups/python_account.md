@@ -1,7 +1,7 @@
 ---
 title: Python Installation 
 draft: false
-tags: ['python','dev']
+tags: ['python','dev','setups']
 date: 2025-11-30
 ---
 

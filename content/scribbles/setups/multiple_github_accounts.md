@@ -1,6 +1,6 @@
 ---
 title: GitHub Multi-Login
-tags: ["github","dev"]
+tags: ["setups","github","dev"]
 date: 2025-11-30
 ---
 

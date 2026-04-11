@@ -2,7 +2,7 @@
 title: Local MCP Filesystem Agent
 draft: false
 date: 2025-02-27 
-tags: [dev,python,mcp,docker]
+tags: [setups,dev,python,mcp,docker]
 ---
 
 ## Introduction

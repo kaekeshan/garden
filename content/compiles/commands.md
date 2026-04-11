@@ -139,6 +139,59 @@ ni filename.extension
 ```
 </details>
 
+###### Robocopy features
+
+<!-- case 1 -->
+
+<details>
+<summary> Mirror a folder to another folder (multi threading) </summary>  
+
+```bash
+robocopy "C:\Users\Name\Documents" "D:\Backup\Documents" /MIR /MT:16 /R:3 /W:1 /Z
+```
+- `/MIR` : copies all files and sub directories and deletes files in the destination if they no longer exists in the source. 
+- `/MT:16` : multi-threading, process up to 16 files simultaneously.
+- `/R:3` : retry 3 times. Default is 1 million. 
+- `/W:1` : wait 1 second b/w retires. 
+- `/Z` : restart mode 
+</details>
+
+<!-- case 2 -->
+
+<details>
+  <summary> Copy files without deleting</summary>
+
+```bash
+robocopy "C:\SourceFolder" "E:\DestinationFolder" /E /MT:16 /R:3 /W:1
+```
+
+</details>
+
+<!-- case 3 -->
+
+<details>
+  <summary> Move files </summary>
+  
+
+```bash
+robocopy "C:\Downloads" "D:\Archive" /MOVE /E
+```
+
+</details>
+
+<!-- case 4 -->
+
+<details>
+  <summary> Copy specific files types </summary>
+  
+
+```bash
+robocopy "C:\MessyFolder" "D:\Images" *.jpg *.png /E
+```
+
+</details>
+
+
 ---
 
 ### Docker Command Line Interface

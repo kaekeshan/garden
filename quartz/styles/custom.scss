@@ -133,3 +133,22 @@ span.text-highlight {
   background-color: #97979759;
   border-radius: 0px;
 }
+
+
+/* -----------------------------------------
+   Fix: Capture scroll wheel over empty space 
+   in the Explorer sidebar
+----------------------------------------- */
+
+.explorer-content {
+  /* Captures the mouse wheel anywhere inside the container */
+  pointer-events: all !important; 
+  
+  /* Applies the scroll-boundary to the correct parent */
+  overscroll-behavior: contain !important; 
+}
+
+.explorer-content ul {
+  /* Removes the boundary from the child list so it doesn't conflict */
+  overscroll-behavior: auto !important; 
+}

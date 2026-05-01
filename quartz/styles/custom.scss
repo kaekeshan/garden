@@ -152,3 +152,18 @@ span.text-highlight {
   /* Removes the boundary from the child list so it doesn't conflict */
   overscroll-behavior: auto !important; 
 }
+
+
+/* Make the images center for a class */
+
+.make-it-center {
+  display: flex;
+  justify-content: center;
+}
+
+.make-it-center img {
+  max-width: 400px; /* Set your maximum standard width here */
+  width: 100%; /* Set your width here */
+  height: auto;
+  border-radius: 8px; /* Optional: adds nice rounded corners */
+}

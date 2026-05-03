@@ -14,3 +14,7 @@ However, the way I see it is a year long challenge, for me for the year 2026 and
 > Sunset - 2026-05-02
 
 ![Sunset](../../assets/DA/2025-Sunset-03-05-2026.png)
+
+> Shrimp - 2026-05-03
+
+![Shrimp](../../assets/DA/2025-Shrimp-04-05-2026.png)

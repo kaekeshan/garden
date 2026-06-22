@@ -57,3 +57,25 @@ General Purpose Algorithm Collections
   ```
 
 </details>
+
+
+<details>
+  <summary>Sum of Arithmetic Progression</summary>
+ 
+
+```python
+def sum_arithmetic_progression(step: int, limit: int) -> int:
+    """
+    Calculates the sum of all multiples of 'step' strictly below 'limit'
+    using O(1) floor division and arithmetic series properties.
+    """
+    target = limit - 1
+    n = target // step
+    first_term = step
+    last_term = n * step
+
+    return (n * (first_term + last_term)) // 2
+```
+
+</details>
+

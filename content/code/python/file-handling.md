@@ -1,260 +1,194 @@
 ---
-title: File Handling in python
+title: File Handling in Python
 draft: false
-tags: [dev,python]
+tags: [python, tutorial]
 date: 2025-12-06
 ---
 
-## Why ?
+How to read from and write to files on disk — text and binary, single-call and line-by-line, with a closing menu-driven program that ties it all together.
 
-Saving the data permanently for the future purpose.
+## Why files?
 
-Temporary storage areas : while a program executes, the data stored is required, but once the execution is complete, the data is no longer available.
+While a Python program is running, its data lives in **memory** — inside Python objects like [[tuple-vs-list|lists]], tuples, and dictionaries. The moment the program exits, that data is gone.
 
-> example of storage structure objects in python : List, tuple, and dictionary  
-The data will be stored in Python Virtual Machine
+**Files** (and **databases**) are how you make data survive past a single run. As a rule of thumb: if the data is small and one program owns it, use a file. If it's large or shared, reach for a database.
 
-Permanent storage area : files and databases are means of storing data permanently stored. On a broad prospective , if you have huge amount of data, go for database,else go for file concept.
+## Concepts
 
-## File handling concepts
+### Types
 
-### Types:
-
-- Text files : text data like names, mark, numbers etc.
-- Binary files : data like images, video, audio files etc.
+- **Text files** — human-readable characters (`.txt`, `.csv`, `.py`, `.md`...). When you read them, Python decodes the bytes into `str`.
+- **Binary files** — raw bytes (images, video, audio, PDFs). You read them as `bytes`.
 
 ### Process
 
-Open the file, : for writing or reading  
+Every file operation follows the same three steps:
 
-`open(filename, mode/purpose)`  
+1. **Open** the file with `open(filename, mode)`.
+2. **Read** or **write** through the file object.
+3. **Close** the file with `file_object.close()` to release the resource.
 
-- if the source code and file are in the same folder, only file name with extension is required i.e. in the current working directory, else absolute path is required.
+```python
+f = open('example.txt', 'w')  # step 1
+f.write('hello')              # step 2
+f.close()                     # step 3
+```
 
- eg: `f = open('example.txt','w')`
+If the file is in the current working directory, just the name is enough. Otherwise, pass an absolute path.
 
+## Modes
 
-#### The allowed modes
+Each mode is a single letter (`r`, `w`, `a`, `x`) optionally followed by `+` (read and write) or `b` (binary). The same letters mean the same thing in every combination.
 
-- 'r' : read operation
-    
-    Opens an existing file for read operation.
-    
-    file pointer is pointing to the first position.
-    
-    If the file is not available, then we will 'file not found' error. [PVM checks for the file]
-    
-    Default mode is read operation
-    
-- 'w' : write operation
-    
-    Opens a file for write operation, if the file is not available, then P.V.M. will create a file.
-    
-    If this file already contains any data, the data is going to be override. 
-    
-- 'a' : append operation
-    
-    Opens a file for append, if file is not available , creates a file.
-    
-    If the file exists, the data is not going to be override, instead, the file pointer points to the last position and new data will be added as continuation.
-    
-- 'x' : exclusive {exclusive write operation}
-    
-    Exactly same as write operation, but in 'x' the file should compulsory not available. The mode creates a new file and starting writing to it.
-    
-    If file exists already, then 'File exist error' is occurred.
-    
-- 'r+': read and write
-    
-    No overriding of existing data
-    
-- 'w+': write and read
-    
-    Override existing data
-    
-- 'a+': append and read
-    
-    It wont override existing data
-    
+### Text modes
 
-These modes are applicable only for text files.
+| Mode | Read | Write | Creates if missing | Truncates existing |
+|------|:----:|:-----:|:------------------:|:------------------:|
+| `r`   | ✓ | — | — | — |
+| `w`   | — | ✓ | ✓ | ✓ |
+| `a`   | — | ✓ | ✓ | — |
+| `x`   | — | ✓ | ✓ | — (errors if exists) |
+| `r+`  | ✓ | ✓ | — | — |
+| `w+`  | ✓ | ✓ | ✓ | ✓ |
+| `a+`  | ✓ | ✓ | ✓ | — |
 
-For **Binary files**, there also exists 7 modes :
+`r` is the default — leave the mode out and Python assumes read.
 
-- 'rb' : read operation
-    
-    Opens an existing file for read operation.
-    
-    file pointer is pointing to the first position.
-    
-    If the file is not available, then we will 'file not found' error. [PVM checks for the file]
-    
-    Default mode is read operation
-    
-- 'wb' : write operation
-    
-    Opens a file for write operation, if the file is not available, then P.V.M. will create a file.
-    
-    If this file already contains any data, the data is going to be override. 
-    
-- 'ab' : append operation
-    
-    opens a file for append, if file is not available , creates a file.
-    
-    If the file exists, the data is not going to be override, instead, the file pointer points to the last position and new data will be added as continuation.
-    
-- 'r+b': read and write
-    
-    No overriding of existing data
-    
-- 'w+b': write and read
-    
-    Override existing data
-    
-- 'a+b': append and read
-    
-    It wont override existing data
-    
-- 'xb' : exclusive
-    
-    Exactly same as write operation, but in 'x' the file should compulsory not available. The mode creates a new file and starting writing to it.
-    
-    If file exists already, then 'File exist error' is occurred.
-    
+>[!warning] Overwriting data
+>
+> `w` and `w+` **truncate** the file the moment they open it. If the file already exists, its contents are gone before you write a single byte. Reach for `a` (append) or `r+` when you want to preserve existing data.
 
-- after performing the required operations, the file should be closed in order to de-allocate the resources allocated for the file object.
-    - syntax: `file_object.close()`
+>[!note] Exclusive mode (`x`)
+>
+> `x` is a safer `w` — it creates the file only if it doesn't already exist. Use it when you want to guarantee you're writing to a fresh file and getting an error otherwise.
 
-### Various properties of file object.
+### Binary modes
 
-`// assume f as a file object`
+Add `b` to any text mode to open the file in binary mode. The meaning of each mode is identical — only the data type changes from `str` to `bytes`.
 
-- f.name
-     name of the file is returned
-- f.mode
-     opened mode 
-- f.closed
-     is the file is closed
-- f.readable()
-     a method to check the file is readable or not, returns bool answer
-- f.writable()
-     a method to check the file is writable or not, returns bool answer
-    
-### Operation
+| Text | Binary | Purpose |
+|------|--------|---------|
+| `r`  | `rb`  | Read |
+| `w`  | `wb`  | Write (truncate) |
+| `a`  | `ab`  | Append |
+| `x`  | `xb`  | Exclusive write |
+| `r+` | `r+b` | Read and write (no truncate) |
+| `w+` | `w+b` | Read and write (truncate) |
+| `a+` | `a+b` | Read and append |
 
-- write operation  
-    - file_object.write(`str`)  
-    - add '\n' to get into new line
-- writeline operation  
-    - file_object.writelines(`list_of_lines`)  
-    - list of lines can be of form list, tuple, or set  
-    - By default, the data will be written to a single line, if you want to be in multiple lines, add a '\n' to the elements.
+>[!info] When to use binary
+>
+> Use binary mode for non-text files (images, video, archives, anything Python doesn't know how to decode as text). It also avoids platform-specific newline translation, which is useful when transferring files between Windows and Unix.
+
+## File object properties
+
+Once a file is open, `f` exposes a few attributes and methods worth knowing:
+
+| Property / method | Returns |
+|-------------------|---------|
+| `f.name` | The file's name (as passed to `open`) |
+| `f.mode` | The mode the file was opened in |
+| `f.closed` | `True` if `f.close()` has been called |
+| `f.readable()` | `True` if the mode allows reading |
+| `f.writable()` | `True` if the mode allows writing |
+
+## Writing
+
+Two methods cover almost every case:
+
+```python
+f.write('hello\n')            # one string
+f.writelines(['a\n', 'b\n'])  # any iterable of strings — list, tuple, set
+```
+
+`writelines` does **not** add newlines for you. If you want each element on its own line, append `\n` to every element yourself — otherwise the file ends up as a single long line.
 
 ![](../assets/python-filehandling/Untitled.png)
-    
-- read operation
-    ```python    
-    file_object.read() # to read total data from the file
-    file_object.read(n) # to read n characters from file
-    file_object.readline() # to read single line
-    file_object.readlines() # to read all lines into a list
-    ```
 
-### Dynamic inputting and outputting
+## Reading
 
-- if a single '\' is used , it is considered as a escape character, to overcome this problem , use '\\'  
+Four methods, each with a slightly different shape:
+
+```python
+f.read()         # the entire file as one string
+f.read(n)        # next n characters
+f.readline()     # next single line (including '\n')
+f.readlines()    # all lines as a list
+```
+
+A few practical notes:
+
+- The file pointer advances after every read — calling `read()` twice gives you the full file the first time and `''` the second.
+- `'\n'` counts as a single character, so `f.read(10)` may end mid-line.
 
 ![](../assets/python-filehandling/Untitled%201.png)
 
-example program :  
+Example program:
 
 ![](../assets/python-filehandling/Untitled%202.png)
 
-// reading data  
+Reading the whole file:
 
 ![](../assets/python-filehandling/Untitled%203.png)
 
-// reading first ten characters  
+Reading the first ten characters:
 
 ![](../assets/python-filehandling/Untitled%204.png)
 
-// reading a single line.  
-// new line,i.e. '\n' (escape character) is considered as a single character 
+Reading a single line — note that `'\n'` is one character:
 
-![](../assets/python-filehandling/Untitled%205.png)  
+![](../assets/python-filehandling/Untitled%205.png)
 
-> while using multiple lines , printing it individually, the output will have extra empty lines as a result of individual print statements 
+>[!warning] Extra blank lines from printing
+>
+> When you read multiple lines and print each one, you get **extra blank lines** between them — `print` adds its own `\n` on top of the line's existing `\n`. Strip the trailing newline with `end=''` on `print`, or `rstrip('\n')` on the line, to fix it.
 
-example :  
+Example:
 
-![](../assets/python-filehandling/Untitled%206.png)  
+![](../assets/python-filehandling/Untitled%206.png)
 
-o/p:  
+Output:
 
 ![](../assets/python-filehandling/Untitled%207.png)
 
-> here the new line b.w 'Chinny' and 'Bunny' is due to individual print statements. To resolve the issue, add a parameter , end=''
+Add `end=''` to remove the extra blank line:
 
 ![](../assets/python-filehandling/Untitled%208.png)
 
-// reading lines of files as list of lines, hence a loop is used to out the lines
+Reading all lines into a list — use a `for` loop to print them one by one:
 
 ![](../assets/python-filehandling/Untitled%209.png)
 
-### coping data from one file to another file
+## The `with` statement
+
+Manually calling `close()` is easy to forget, especially when an error is raised mid-operation. The `with` statement closes the file for you, even if an exception fires:
 
 ```python
-#consider file input.txt, having input data
-#taking input data and coping it to file output.txt
-
-f1 = open('input.txt')
-f2 = open('output.txt','w')
-f2.write(f1.read())
-f1.close()
-f2.close()
+with open('example.txt', 'r') as f:
+    data = f.read()
+# f is closed here, even if `read()` raised
 ```
 
-### 'with open() as ' operation
+>[!tip] Prefer `with`
+>
+> Reach for `with open(...) as f` by default. It makes the close explicit and removes a whole class of bugs around leaked file handles. The manual `f = open(...)` / `f.close()` pattern is only useful when you need the file object to outlive a single block.
 
- // using 'with open' approach we do not have to use close() method to explicitly close the file object, the approach will automatically close the file object.
+## Copying data between files
+
+A common task: read one file, write its contents to another. The `with` form keeps it tight:
 
 ```python
-with open('filename.extension','mode') as file_object:
-  # perform the necessary operations
+with open('input.txt') as src, open('output.txt', 'w') as dst:
+    dst.write(src.read())
 ```
 
-// if you are skeptical, use closed() method to check
+## Putting it together
 
-### Creating , renaming and removing file
-
-```python
-def renamefile():
-    global _FILE
-    src = _FILE
-    dest = input("Enter the new name for file with extension _ ")
-    os.rename(src , dest) # renmae file
-    print("File successfully renamed !!")
-    _FILE = dest
-```
+A small menu-driven program that demonstrates create, read, append, rename, and remove on a single file:
 
 ```python
-#create file
-_FILE = input("Enter new file name _ ")
-            with open(_FILE,'x') as fs :
-                pass
-```
-
-```python
-#remove file
-if os.path.exists(_FILE):
-              os.remove(_FILE)
-            else:
-              print("The file does not exist")
-```
-
-```python
-#file handling
 import os
+
 _FILE = ""
 
 def readfile():
@@ -267,44 +201,43 @@ def readfile():
 def appendfile():
     global _FILE
     with open(_FILE, 'a') as fs:
-            limit = int(input("Enter the no of students "))
-            for i in range(limit):
-                name = input("\n Enter the name of the student _ ")
-                roll = input(" Enter the roll no of the student _ ")
-                adddress = input("Enter the address of the student_ ")
-                class_name = input("Enter the class of student_ ")
-                fs.write(name + '\n')
-                fs.write(roll + '\n')
-                fs.write(class_name + '\n')
-                fs.write(address + '\n')
-    
+        limit = int(input("Enter the no of students "))
+        for i in range(limit):
+            name = input("\n Enter the name of the student _ ")
+            roll = input(" Enter the roll no of the student _ ")
+            address = input("Enter the address of the student_ ")
+            class_name = input("Enter the class of student_ ")
+            fs.write(name + '\n')
+            fs.write(roll + '\n')
+            fs.write(class_name + '\n')
+            fs.write(address + '\n')
+
 def renamefile():
     global _FILE
     src = _FILE
     dest = input("Enter the new name for file with extension _ ")
-    os.rename(src , dest)
+    os.rename(src, dest)
     print("File successfully renamed !!")
     _FILE = dest
 
-        
 def menu():
     global _FILE
     _FILE = input("Enter file name with extension __ ")
-    while(1):
+    while True:
         print("\n==================")
         print("1. Create file")
         print("2. Read file")
         print("3. Append file")
         print("4. Rename file")
         print("5. Remove file")
-        print("6. quit program")
+        print("6. Quit program")
         print("==================")
         choice = int(input("Enter the choice _ "))
         if choice == 1:
             _FILE = input("Enter new file name _ ")
-            with open(_FILE,'x') as fs :
+            with open(_FILE, 'x') as fs:
                 pass
-        elif choice == 2 :
+        elif choice == 2:
             readfile()
         elif choice == 3:
             appendfile()
@@ -312,14 +245,15 @@ def menu():
             renamefile()
         elif choice == 5:
             if os.path.exists(_FILE):
-              os.remove(_FILE)
+                os.remove(_FILE)
             else:
-              print("The file does not exist")
+                print("The file does not exist")
         elif choice == 6:
             break
         else:
             print("Not a valid input")
-            os.sleep(3)
-        
+
 menu()
 ```
+
+Each branch uses the operation it needs — `x` to create safely, `a` to append without truncating, `os.rename` and `os.remove` for filesystem-level changes — and every file handle is closed automatically by the `with` block.

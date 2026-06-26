@@ -2,26 +2,32 @@
 
 /* 1. GLOBAL VARIABLES (Theme Switching) */
 :root {
-  --boldWeight: 700;
+  --boldWeight: 800;
   /* Default Dark Mode Colors */
-  --nav-hover: #FFFFFF; 
+  --nav-hover: #FFFFFF;
   --tag-bg: rgba(255, 255, 255, 0.1);
   --tag-color: #ffb86c; /* Keeping your orange accent for tags */
   /* This color is subtle, neutral, and professional */
-  --heading-color: #E4E4E7; 
+  --heading-color: #E4E4E7;
   --heading-muted: #fb8500;
   --alias-color: #d4d4d4;
+  /* Bold text: brighter than body so it actually pops in dark mode.
+     Intentionally left at the heading color in light mode (see
+     [saved-theme="light"] below) — the user prefers that look there. */
+  --bold-color: #FFFFFF;
 }
 
 /* 2. LIGHT MODE OVERRIDES */
 [saved-theme="light"] {
   /* In light mode, white text is invisible, so we use a dark gray or orange */
-  --nav-hover: #ffb86c; 
+  --nav-hover: #ffb86c;
   --tag-bg: rgba(0, 0, 0, 0.08);
   --tag-color: #e67e22; /* A slightly darker orange for better legibility on white */
   --alias-color: #4e4e4e;
-  --heading-color: #27272A; 
+  --heading-color: #27272A;
   --heading-muted: #B15C00;
+  /* Match the heading color in light mode — user prefers the current look. */
+  --bold-color: #2b2b2b;
 }
 
 /* 3. EXPLORER / NAVIGATION */
@@ -42,9 +48,27 @@
   color: var(--nav-hover) !important;
 }
 
-/* 4. TYPOGRAPHY (Bold) */
+/* 4. TYPOGRAPHY (Bold)
+   Weight handles prominence; color handles contrast against body text.
+   We deliberately exclude `a`, `code`, and callout blocks — they already
+   carry their own color and shouldn't be overridden.
+   The `.page article p > strong` selector matches base.scss's `.page article
+   p > strong` rule on specificity so the cascade lets our value win. */
 strong, b {
   font-weight: var(--boldWeight) !important;
+}
+
+.page article p > strong,
+.page article p > b,
+.page article li > strong,
+.page article li > b,
+.page article td > strong,
+.page article td > b,
+.page article th > strong,
+.page article th > b,
+.page article blockquote > strong,
+.page article blockquote > b {
+  color: var(--bold-color);
 }
 
 /* 5. TAGS */

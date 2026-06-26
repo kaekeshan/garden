@@ -578,25 +578,6 @@ return {
         Error = " ",
         BoldWarning = "",
         Warning = " ",
-        BoldInformation = "",
-        Information = " ",
-        BoldQuestion = "",
-        Question = " ",
-        BoldHint = " ",
-        Hint = "",
-        Debug = " ",
-        Trace = "✎"
-    },
-    misc = {
-        Robot = " ",
-        Squirrel = " ",
-        Tag = " ",
-        Watch = " ",
-        Smiley = " ",
-        Package = " ",
-        CircuitBoard = " "
-    }
-}
 ```
 
 </details>

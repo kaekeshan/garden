@@ -16,8 +16,11 @@
     overscroll-behavior: contain;
 
     & > li {
+      margin: 0.1rem 0;
       & > a {
         background-color: transparent;
+        font-size: 0.85rem;
+        line-height: 1.3;
       }
     }
   }

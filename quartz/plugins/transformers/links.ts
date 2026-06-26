@@ -96,6 +96,9 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) 
 
                 if (isExternal && opts.openLinksInNewTab) {
                   node.properties.target = "_blank"
+                  // noopener prevents the new tab from accessing window.opener
+                  // (tab-nabbing); noreferrer strips the Referer header.
+                  node.properties.rel = "noopener noreferrer"
                 }
 
                 // don't process external links or intra-document anchors

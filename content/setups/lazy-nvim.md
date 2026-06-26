@@ -1,16 +1,21 @@
 ---
-title: NeoVim - Lazy Package Manager
+title: Neovim - Lazy Package Manager
 draft: false
-tags: ['setups','vim','neovim','lua']
+tags: [vim, reference]
 date: 2025-12-01
 ---
 
-### What ?
-+ Package Manager for neo vim.(reference [github](https://github.com/folke/lazy.nvim))
+[Lazy.nvim](https://github.com/folke/lazy.nvim) is a package manager for Neovim that handles plugin installation, updates, lazy-loading, and configuration from a single Lua entry point.
 
-### Use ?
+## Bootstrap
 
-Bootstrap by creating a *lazy.lua* file under namespace and create a sample configuration and add dependency in the *init.lua* as *require ("<namespace>.lazy")*
+Create a `lazy.lua` file under your namespace directory, then `require` it from `init.lua`:
+
+```lua
+require("<namespace>.lazy")
+```
+
+The bootstrap snippet clones lazy.nvim into the standard data path on first run if it isn't there yet:
 
 ```lua
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -24,7 +29,7 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath
     }
 end
-vim.opt.rtp:prepend(lazypath) -- rtp - run time path
+vim.opt.rtp:prepend(lazypath) -- rtp = runtime path
 
 require("lazy").setup {
     spec = LAZY_PLUGIN_SPEC, -- global spec table
@@ -39,27 +44,33 @@ require("lazy").setup {
         notify = false
     }
 }
-
 ```
 
-The following code appends the lazy module to the standard data path of vim  
-```lua
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-```
+>[!info] Where `lazypath` points on Windows
+>
+> `vim.fn.stdpath("data")` resolves to something like `C:\Users\<user>\AppData\Local\nvim-data`. Run `lua print(vim.fn.stdpath("data"))` in Neovim to see the exact value on your machine.
+>
+> ![image.png](../assets/image_1712002733167_0.png)
 
-In windows, `lua print(vim.fn.stdpath("data"))` will return ![image.png](../assets/image_1712002733167_0.png)  
-To toggle Lazy.nvim window, use ==Lazy== command  
+To open the Lazy UI, run the `:Lazy` command. The window lists installed plugins, pending updates, and lets you sync or clean up:
+
 ![image.png](../assets/image_1712003514001_0.png)
 
-### Plugins ?
+## Plugins
 
-To use plugins using lazy, create a corresponding <plugin>.lua file under namespace and provide the configuration like this (colorscheme configuration):
+Each plugin gets its own `<plugin>.lua` file under your namespace directory. The `spec` table is the lazy.nvim convention: it lists the source, loading trigger, dependencies, and a `config()` function that runs when the plugin loads.
+
+>[!tip] Keep `lazy = false` for your colorscheme
+>
+> If `darkplus` (or whatever you use) is your main colorscheme, set `lazy = false` and `priority = 1000` so it loads before any plugin tries to apply its own colors.
+
+Example colorscheme spec:
 
 ```lua
 local SPEC = {
     "LunarVim/darkplus.nvim",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000 -- make sure to load this before all the other start plugins
+    lazy = false,        -- load at startup if this is your main colorscheme
+    priority = 1000      -- load before all other start plugins
 }
 
 function SPEC.config()
@@ -67,5 +78,4 @@ function SPEC.config()
 end
 
 return SPEC
-
 ```

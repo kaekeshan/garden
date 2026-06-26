@@ -1,17 +1,19 @@
 ---
 title: Neovim - LSP
 draft: false
-tags: ['setups','vim','neovim','lua','lsp']
-date: 2025-11-30
+tags: [vim, lsp, reference]
+date: 2025-12-01
 ---
 
-## LSP - Language Server Protocol 
+The **Language Server Protocol (LSP)** is an open, JSON-RPC-based protocol between source-code editors / IDEs and language servers. It standardises "language intelligence" features — code completion, syntax highlighting, warnings, errors, refactors — so support for a language can be implemented once and reused across editors.
 
-The Language Server Protocol (LSP) is an open, JSON-RPC-based protocol for use between source-code editors or integrated development environments (IDEs) and servers that provide "language intelligence tools": programming language-specific features like code completion, syntax highlighting and marking of warnings and errors, as well as refactoring routines. The goal of the protocol is to allow programming language support to be implemented and distributed independently of any given editor or IDE. (reference - [wikipedia](https://en.wikipedia.org/wiki/Language_Server_Protocol))
+Reference: [wikipedia — Language Server Protocol](https://en.wikipedia.org/wiki/Language_Server_Protocol)
 
-Some of the example configurations are listed below. 
+Below are example server configurations that hook into the `lspconfig` setup described in [[neo-vim|Neovim - Setup]]. Each file lives under `lua/user/lspsettings/<server>.lua` and is loaded dynamically by the main lspconfig block.
 
-+ lua_ls
+## lua_ls
+
+Disables Lua formatter, registers common globals, points the workspace library at Neovim's runtime and your config, and turns off most hints.
 
 ```lua
 -- https://luals.github.io/wiki/settings/
@@ -39,11 +41,11 @@ return {
             },
             hint = {
                 enable = false,
-                arrayIndex = "Disable", -- "Enable" | "Auto" | "Disable"
+                arrayIndex = "Disable",  -- "Enable" | "Auto" | "Disable"
                 await = true,
-                paramName = "Disable", -- "All" | "Literal" | "Disable"
+                paramName = "Disable",   -- "All" | "Literal" | "Disable"
                 paramType = true,
-                semicolon = "All", -- "All" | "SameLine" | "Disable"
+                semicolon = "All",       -- "All" | "SameLine" | "Disable"
                 setType = false
             },
             telemetry = {
@@ -52,10 +54,11 @@ return {
         }
     }
 }
-
 ```
 
-+ jsonls
+## jsonls
+
+Pulls schema definitions from `schemastore.nvim` (see [[neo-vim|Schemastore plugin]]) and adds a `:Format` command that runs over the full buffer.
 
 ```lua
 return {
@@ -74,10 +77,11 @@ return {
         }
     }
 }
-
 ```
 
-+ jdtls
+## jdtls
+
+Eclipse JDT Language Server for Java. Uses Mason to resolve the install path, attaches Lombok's Java agent, and points the workspace at Java 8.
 
 ```lua
 local nvim_lsp = require("lspconfig")
@@ -130,6 +134,4 @@ return {
         }
     }
 }
-
 ```
-

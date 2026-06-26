@@ -1,75 +1,97 @@
 ---
 title: Neovim - Setup
 draft: false
-tags: ['setups','vim','neovim','lua','dev']
+tags: [vim, tutorial]
 date: 2025-11-30
 ---
 
-### Folder Configurations
+This page walks through the Neovim configuration I use day-to-day on Windows. It assumes you already have [[lazy-nvim|Lazy.nvim]] set up as the package manager — every plugin spec below is a `*.lua` file under your namespace directory that `require("namespace.lazy")` will pick up.
 
-In Windows system the config file (**init.lua**) is located in C:\\Users\\<user>\\AppData\\Local\\nvim directory.   
-Create a names space hierarchy in the nvim directory like -  
+## Folder layout
+
+On Windows the config file is `init.lua` and it lives at:
+
+```
+C:\Users\<user>\AppData\Local\nvim\init.lua
+```
+
+Inside the same `nvim` directory, create a namespace folder (I use `kaekeshan`) and split the config into separate files:
 
 ![image.png](../assets/image_1711998665199_0.png)
->kaekeshan is the namespace used in the example.  
 
-==launch.lua== file contains a custom function to control the imports
-		  
+The three files you need first:
+
+| File | Purpose |
+|------|---------|
+| `launch.lua` | Defines `LAZY_PLUGIN_SPEC` (a global table) and a `spec(item)` helper to register plugins. |
+| `options.lua` | Core `vim.opt` settings — clipboard, splits, indent, search behaviour, etc. |
+| `keymaps.lua` | Global keymaps — leader key, window navigation, mouse-driven LSP, Tab/S-Tab behaviour. |
+
+`init.lua` pulls them together:
+
+```lua
+require("namespace.launch")   -- registers plugins
+require("namespace.options")
+require("namespace.keymaps")
+```
+
+## launch.lua
+
+A small helper that builds the global plugin table lazy.nvim consumes:
 
 ```lua
 LAZY_PLUGIN_SPEC = {} -- global table variable
+
 function spec(item)
-    table.insert(LAZY_PLUGIN_SPEC, {import = item}) -- adding imports received as inputs
+    table.insert(LAZY_PLUGIN_SPEC, {import = item}) -- adds imports received as inputs
 end
-
 ```
-		  
-use *require("namespace.launch")* in the ==init.lua== file
 
-Under namespace, add ==options.lua== file which will provide basic vim settings and add the dependency like *require("namespace.options")*
+## options.lua
+
+Core editor options. These are the values that have stuck over time — paste, tweak, restart:
 
 ```lua
-vim.opt.backup = false -- creates a backup file
-vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
-vim.opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
-vim.opt.completeopt = {"menuone", "noselect"} -- mostly just for cmp
-vim.opt.conceallevel = 0 -- so that `` is visible in markdown files
--- vim.opt.fileencoding = "utf-8" -- the encoding written to a file
-vim.opt.hlsearch = true -- highlight all matches on previous search pattern
-vim.opt.ignorecase = true -- ignore case in search patterns
-vim.opt.mouse = "a" -- allow the mouse to be used in neovim
-vim.opt.pumheight = 10 -- pop up menu height
+vim.opt.backup = false           -- don't create a backup file
+vim.opt.clipboard = "unnamedplus" -- share with system clipboard
+vim.opt.cmdheight = 1             -- more space in the command line
+vim.opt.completeopt = {"menuone", "noselect"} -- mostly for cmp
+vim.opt.conceallevel = 0          -- so that `` is visible in markdown files
+vim.opt.hlsearch = true           -- highlight all matches on previous search
+vim.opt.ignorecase = true         -- ignore case in search patterns
+vim.opt.mouse = "a"               -- allow the mouse everywhere
+vim.opt.pumheight = 10            -- popup menu height
 vim.opt.pumblend = 10
-vim.opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
-vim.opt.showtabline = 1 -- always show tabs
-vim.opt.smartcase = true -- smart case
-vim.opt.smartindent = true -- make indenting smarter again
-vim.opt.splitbelow = true -- force all horizontal splits to go below current window
-vim.opt.splitright = true -- force all vertical splits to go to the right of current window
-vim.opt.swapfile = false -- creates a swapfile
-vim.opt.termguicolors = true -- set term gui colors (most terminals support this)
-vim.opt.timeoutlen = 1000 -- time to wait for a mapped sequence to complete (in milliseconds)
-vim.opt.undofile = true -- enable persistent undo
-vim.opt.updatetime = 100 -- faster completion (4000ms default)
-vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-vim.opt.expandtab = true -- convert tabs to spaces
-vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
-vim.opt.tabstop = 2 -- insert 2 spaces for a tab
-vim.opt.cursorline = true -- highlight the current line
-vim.opt.number = true -- set numbered lines
+vim.opt.showmode = false          -- hide the "-- INSERT --" indicator
+vim.opt.showtabline = 1           -- always show tabs
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.splitbelow = true         -- horizontal splits go below current window
+vim.opt.splitright = true         -- vertical splits go to the right
+vim.opt.swapfile = false
+vim.opt.termguicolors = true      -- enable GUI colors in the terminal
+vim.opt.timeoutlen = 1000         -- ms to wait for a mapped sequence
+vim.opt.undofile = true           -- persistent undo
+vim.opt.updatetime = 100          -- faster completion (default 4000ms)
+vim.opt.writebackup = false
+
+vim.opt.expandtab = true          -- tabs -> spaces
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.cursorline = true
+vim.opt.number = true
 vim.opt.laststatus = 3
 vim.opt.showcmd = false
 vim.opt.ruler = false
-vim.opt.relativenumber = true -- set relative numbered lines
-vim.opt.numberwidth = 4 -- set number column width to 2 {default 4}
-vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
-vim.opt.wrap = false -- display lines as one long line
+vim.opt.relativenumber = true
+vim.opt.numberwidth = 4
+vim.opt.signcolumn = "yes"        -- prevents text shifting when signs toggle
+vim.opt.wrap = false
 vim.opt.scrolloff = 0
 vim.opt.sidescrolloff = 8
-vim.opt.guifont = "monospace:h17" -- the font used in graphical neovim applications
+vim.opt.guifont = "monospace:h17"
 vim.opt.title = false
--- colorcolumn = "80",
--- colorcolumn = "120",
+
 vim.opt.fillchars = vim.opt.fillchars + "eob: "
 vim.opt.fillchars:append {
     stl = " "
@@ -82,22 +104,24 @@ vim.cmd [[set iskeyword+=-]]
 
 vim.g.netrw_banner = 0
 vim.g.netrw_mouse = 2
-		  
 ```
 
-Under namespace, add ==keymaps.lua== to add basic keymaps and add the dependency like *require("namespace.keymaps")*
+## keymaps.lua
+
+Leader-key setup, window navigation, mouse-driven LSP popups, and visual-mode helpers:
 
 ```lua
 local keymap = vim.keymap.set
 local opts = {noremap = true, silent = true}
 
+-- Leader key: Space
 keymap("n", "<Space>", "", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 keymap("n", "<C-i>", "<C-i>", opts)
 
--- Better window navigation
+-- Better window navigation (Alt + hjkl)
 keymap("n", "<m-h>", "<C-w>h", opts)
 keymap("n", "<m-j>", "<C-w>j", opts)
 keymap("n", "<m-k>", "<C-w>k", opts)
@@ -108,37 +132,40 @@ keymap("n", "<m-tab>", "<c-6>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
-keymap("x", "p", [["_dP]]) -- to retain copied item in the registery
+-- Paste in visual mode without yanking
+keymap("x", "p", [["_dP]])
 
+-- Mouse menu (right-click and Tab)
 vim.cmd [[:amenu 10.100 mousemenu.Goto\ Definition <cmd>lua vim.lsp.buf.definition()<CR>]]
 vim.cmd [[:amenu 10.110 mousemenu.References <cmd>lua vim.lsp.buf.references()<CR>]]
--- vim.cmd [[:amenu 10.120 mousemenu.-sep- *]]
-
 vim.keymap.set("n", "<RightMouse>", "<cmd>:popup mousemenu<CR>")
 vim.keymap.set("n", "<Tab>", "<cmd>:popup mousemenu<CR>")
 
--- more good
+-- Shift-h/l jump to first/last non-blank
 keymap({"n", "o", "x"}, "<s-h>", "^", opts)
 keymap({"n", "o", "x"}, "<s-l>", "g_", opts)
 
--- tailwind bearable to work with
+-- gj/gk for soft-wrapped lines
 keymap({"n", "x"}, "j", "gj", opts)
 keymap({"n", "x"}, "k", "gk", opts)
+
+-- Toggle wrap
 keymap("n", "<leader>w", ":lua vim.wo.wrap = not vim.wo.wrap<CR>", opts)
 
+-- Exit terminal insert mode with Ctrl-;
 vim.api.nvim_set_keymap("t", "<C-;>", "<C-\\><C-n>", opts)
-
 ```
-              
-### Package manager
-A package manager or package management system (PMS) is a collection of software tools that automates the process of installing, upgrading, configuring, and removing computer programs for a computer in a consistent manner. (reference - [wikipedia](https://en.wikipedia.org/wiki/Package_manager))  
 
-One of the popular package manager for Vim system is [[lazy-nvim|Lazy.nvim]]. There are other managers like **Vim-Plug**, **Pathogen**, **Vindle** etc. 
+## Plugins
 
-### Plugins
-+ Dev-Icons
-    + [devicons-repo](https://github.com/nvim-tree/nvim-web-devicons)
-    + configuration
+Each subsection below is one plugin spec file. They all share the same `local SPEC = { ... }; function SPEC.config() ... end; return SPEC` shape.
+
+### Dev-Icons
+
+File-type icons in UI elements (completion menu, tree, statusline).
+
+- Repository: [nvim-tree/nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
+
 ```lua
 local devicons = {
     "nvim-tree/nvim-web-devicons",
@@ -150,12 +177,14 @@ function devicons.config()
 end
 
 return devicons
-
 ```
 
-+ Tree-sitter
-    + [treesitter-repo](https://github.com/nvim-treesitter/nvim-treesitter)
-    + configuration
+### Tree-sitter
+
+Incremental parsing-based syntax highlighting and indentation.
+
+- Repository: [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+
 ```lua
 local SPEC = {
     "nvim-treesitter/nvim-treesitter",
@@ -164,22 +193,12 @@ local SPEC = {
 }
 
 function SPEC.config()
-    require "nvim-treesitter.install".compilers = {"zig"} -- install zig using system package manager
+    require "nvim-treesitter.install".compilers = {"zig"} -- install zig via system package manager
     require("nvim-treesitter.configs").setup {
         ensure_installed = {
-            "lua",
-            "markdown",
-            "markdown_inline",
-            "bash",
-            "python",
-            "c",
-            "cpp",
-            "rust",
-            "java",
-            "javascript",
-            "html",
-            "css",
-            "csv"
+            "lua", "markdown", "markdown_inline",
+            "bash", "python", "c", "cpp", "rust",
+            "java", "javascript", "html", "css", "csv"
         },
         highlight = {enable = true},
         indent = {enable = true}
@@ -187,14 +206,16 @@ function SPEC.config()
 end
 
 return SPEC
-
 ```
 
-> Use commands like '*TSUpdate*', '*TSInstall*' and '*TSUninstall*' to manage the parsers
+>[!tip] Manage parsers with `:TSUpdate`, `:TSInstall <lang>`, `:TSUninstall <lang>`.
 
-+ Hard-time
-    + [hardtime-repo](https://github.com/m4xshen/hardtime.nvim)
-    + configuration
+### Hardtime
+
+Discourages bad habits (e.g. repeated `h/j/k/l` instead of word motions) by briefly blocking the key.
+
+- Repository: [m4xshen/hardtime.nvim](https://github.com/m4xshen/hardtime.nvim)
+
 ```lua
 local SPEC = {
     "m4xshen/hardtime.nvim",
@@ -207,12 +228,13 @@ function SPEC.config()
 end
 
 return SPEC
-
 ```
 
-+ Mason
-    + [mason-repo](https://github.com/williamboman/mason-lspconfig.nvim)
-    + configuration
+### Mason + Mason-LSPConfig
+
+Package manager for LSP servers, linters, formatters. The list below is the set of servers I auto-install:
+
+- Repository: [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
 
 ```lua
 local SPEC = {
@@ -240,9 +262,7 @@ function SPEC.config()
     }
 
     require("mason").setup {
-        ui = {
-            border = "rounded"
-        }
+        ui = {border = "rounded"}
     }
 
     require("mason-lspconfig").setup {
@@ -251,12 +271,14 @@ function SPEC.config()
 end
 
 return SPEC
-
 ```
 
-+ Schema-store
-    + [schema-store](https://github.com/b0o/SchemaStore.nvim)
-    + configuration
+### Schemastore
+
+JSON schema catalog, used by `jsonls` to validate configs.
+
+- Repository: [b0o/SchemaStore.nvim](https://github.com/b0o/SchemaStore.nvim)
+
 ```lua
 local SPEC = {
     "b0o/schemastore.nvim",
@@ -267,12 +289,13 @@ function SPEC.config()
 end
 
 return SPEC
-
 ```
 
-+ Lspconfig
-    + [lspconfig-repo](https://github.com/neovim/nvim-lspconfig)
-    + configuration
+### Lspconfig
+
+The main LSP wiring — buffer keymaps, capabilities, per-server setups. Per-server settings live under `lua/user/lspsettings/<server>.lua`; see [[language-server-configs|Neovim - LSP]] for examples.
+
+- Repository: [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 
 ```lua
 local SPEC = {
@@ -290,9 +313,9 @@ local function lsp_keymaps(bufnr)
     local keymap = vim.api.nvim_buf_set_keymap
     keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
     keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+    keymap(bufnr, "n", "K",  "<cmd>lua vim.lsp.buf.hover()<CR>",       opts)
     keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-    keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+    keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>",  opts)
     keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 end
 
@@ -343,29 +366,19 @@ function SPEC.config()
     local icons = require "kaekeshan.icons" -- extra dependency
 
     local servers = {
-        "clangd",
-        "cssls",
-        "jsonls",
-        "quick_lint_js",
-        "jedi_language_server",
-        "rust_analyzer",
-        "sqlls",
-        "biome",
-        "lemminx",
-        "html",
-        "lua_ls",
-        "jdtls",
-        "marksman"
+        "clangd", "cssls", "jsonls", "quick_lint_js",
+        "jedi_language_server", "rust_analyzer", "sqlls",
+        "biome", "lemminx", "html", "lua_ls", "jdtls", "marksman"
     }
 
     local default_diagnostic_config = {
         signs = {
             active = true,
             values = {
-                {name = "DiagnosticSignError", text = icons.diagnostics.Error},
-                {name = "DiagnosticSignWarn", text = icons.diagnostics.Warning},
-                {name = "DiagnosticSignHint", text = icons.diagnostics.Hint},
-                {name = "DiagnosticSignInfo", text = icons.diagnostics.Information}
+                {name = "DiagnosticSignError",  text = icons.diagnostics.Error},
+                {name = "DiagnosticSignWarn",   text = icons.diagnostics.Warning},
+                {name = "DiagnosticSignHint",   text = icons.diagnostics.Hint},
+                {name = "DiagnosticSignInfo",   text = icons.diagnostics.Information}
             }
         },
         virtual_text = false,
@@ -388,7 +401,7 @@ function SPEC.config()
         vim.fn.sign_define(sign.name, {texthl = sign.name, text = sign.text, numhl = sign.name})
     end
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"})
+    vim.lsp.handlers["textDocument/hover"]         = vim.lsp.with(vim.lsp.handlers.hover,         {border = "rounded"})
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"})
     require("lspconfig.ui.windows").default_options.border = "rounded"
 
@@ -412,179 +425,187 @@ function SPEC.config()
 end
 
 return SPEC
-         
 ```
 
-The configuration has a dependency on the following 
-+ [which-key](https://github.com/folke/which-key.nvim) plugin and icons function
+>[!warning] Two required dependencies for `lspconfig`
+>
+> - [which-key](https://github.com/folke/which-key.nvim) for the `<leader>l*` mappings.
+> - The icons function (`require "kaekeshan.icons"`) used by the diagnostic signs. See [Icons](#icons) below.
+
+### Icons
+
+The `icons` table used by `lspconfig`, `cmp`, and `devicons` to render glyphs for kinds, git statuses, diagnostics, and UI elements. This is a data file — keep it as is, or fork the icon mappings to your taste.
+
+<details>
+<summary>Show the icons catalog</summary>
 
 ```lua
 return {
     kind = {
-        Array = " ",
-        Boolean = " ",
-        Class = " ",
-        Color = " ",
-        Constant = " ",
-        Constructor = " ",
-        Enum = " ",
-        EnumMember = " ",
-        Event = " ",
-        Field = " ",
-        File = " ",
-        Folder = "󰉋 ",
-        Function = " ",
-        Interface = " ",
-        Key = " ",
-        Keyword = " ",
-        Method = " ",
-        -- Module = " ",
-        Module = " ",
-        Namespace = " ",
-        Null = "󰟢 ",
-        Number = " ",
-        Object = " ",
-        Operator = " ",
-        Package = " ",
-        Property = " ",
-        Reference = " ",
-        Snippet = " ",
-        String = " ",
-        Struct = " ",
-        Text = " ",
-        TypeParameter = " ",
-        Unit = " ",
-        Value = " ",
-        Variable = " "
+        Array = " ",
+        Boolean = " ",
+        Class = " ",
+        Color = " ",
+        Constant = " ",
+        Constructor = " ",
+        Enum = " ",
+        EnumMember = " ",
+        Event = " ",
+        Field = " ",
+        File = " ",
+        Folder = " ",
+        Function = " ",
+        Interface = " ",
+        Key = " ",
+        Keyword = " ",
+        Method = " ",
+        Module = " ",
+        Namespace = " ",
+        Null = " ",
+        Number = " ",
+        Object = " ",
+        Operator = " ",
+        Package = " ",
+        Property = " ",
+        Reference = " ",
+        Snippet = " ",
+        String = " ",
+        Struct = " ",
+        Text = " ",
+        TypeParameter = " ",
+        Unit = " ",
+        Value = " ",
+        Variable = " "
     },
     git = {
-        LineAdded = " ",
-        LineModified = " ",
-        LineRemoved = " ",
-        FileDeleted = " ",
+        LineAdded = " ",
+        LineModified = " ",
+        LineRemoved = " ",
+        FileDeleted = " ",
         FileIgnored = "◌",
-        FileRenamed = " ",
+        FileRenamed = " ",
         FileStaged = "S",
-        FileUnmerged = "",
-        FileUnstaged = "",
+        FileUnmerged = " ",
+        FileUnstaged = "",
         FileUntracked = "U",
-        Diff = " ",
-        Repo = " ",
-        Octoface = " ",
-        Copilot = " ",
-        Branch = ""
+        Diff = " ",
+        Repo = " ",
+        Octoface = " ",
+        Copilot = " ",
+        Branch = ""
     },
     ui = {
-        ArrowCircleDown = "",
-        ArrowCircleLeft = "",
-        ArrowCircleRight = "",
-        ArrowCircleUp = "",
-        BoldArrowDown = "",
-        BoldArrowLeft = "",
-        BoldArrowRight = "",
-        BoldArrowUp = "",
-        BoldClose = "",
-        BoldDividerLeft = "",
-        BoldDividerRight = "",
+        ArrowCircleDown = "",
+        ArrowCircleLeft = "",
+        ArrowCircleRight = "",
+        ArrowCircleUp = "",
+        BoldArrowDown = "",
+        BoldArrowLeft = "",
+        BoldArrowRight = "",
+        BoldArrowUp = "",
+        BoldClose = "",
+        BoldDividerLeft = "",
+        BoldDividerRight = "",
         BoldLineLeft = "▎",
         BoldLineMiddle = "┃",
         BoldLineDashedMiddle = "┋",
-        BookMark = "",
-        BoxChecked = " ",
-        Bug = " ",
-        Stacks = "",
-        Scopes = "",
-        Watches = "󰂥",
-        DebugConsole = " ",
-        Calendar = " ",
-        Check = "",
-        ChevronRight = "",
-        ChevronShortDown = "",
-        ChevronShortLeft = "",
-        ChevronShortRight = "",
-        ChevronShortUp = "",
-        Circle = " ",
-        Close = "󰅖",
-        CloudDownload = " ",
-        Code = "",
-        Comment = "",
-        Dashboard = "",
-        DividerLeft = "",
-        DividerRight = "",
+        BookMark = " ",
+        BoxChecked = " ",
+        Bug = " ",
+        Stacks = "",
+        Scopes = "",
+        Watches = "",
+        DebugConsole = " ",
+        Calendar = " ",
+        Check = " ",
+        ChevronRight = "",
+        ChevronShortDown = "",
+        ChevronShortLeft = "",
+        ChevronShortRight = "",
+        ChevronShortUp = "",
+        Circle = " ",
+        Close = "",
+        CloudDownload = " ",
+        Code = "",
+        Comment = "",
+        Dashboard = "",
+        DividerLeft = "",
+        DividerRight = "",
         DoubleChevronRight = "»",
-        Ellipsis = "",
-        EmptyFolder = " ",
-        EmptyFolderOpen = " ",
-        File = " ",
-        FileSymlink = "",
-        Files = " ",
-        FindFile = "󰈞",
-        FindText = "󰊄",
-        Fire = "",
-        Folder = "󰉋 ",
-        FolderOpen = " ",
-        FolderSymlink = " ",
-        Forward = " ",
-        Gear = " ",
-        History = " ",
-        Lightbulb = " ",
+        Ellipsis = "",
+        EmptyFolder = " ",
+        EmptyFolderOpen = " ",
+        File = " ",
+        FileSymlink = "",
+        Files = " ",
+        FindFile = "",
+        FindText = "",
+        Fire = " ",
+        Folder = " ",
+        FolderOpen = " ",
+        FolderSymlink = " ",
+        Forward = " ",
+        Gear = " ",
+        History = " ",
+        Lightbulb = " ",
         LineLeft = "▏",
         LineMiddle = "│",
-        List = " ",
-        Lock = " ",
-        NewFile = " ",
-        Note = " ",
-        Package = " ",
-        Pencil = "󰏫 ",
-        Plus = " ",
-        Project = " ",
-        Search = " ",
-        SignIn = " ",
-        SignOut = " ",
-        Tab = "󰌒 ",
-        Table = " ",
-        Target = "󰀘 ",
-        Telescope = " ",
-        Text = " ",
-        Tree = "",
-        Triangle = "󰐊",
-        TriangleShortArrowDown = "",
-        TriangleShortArrowLeft = "",
-        TriangleShortArrowRight = "",
-        TriangleShortArrowUp = ""
+        List = " ",
+        Lock = " ",
+        NewFile = " ",
+        Note = " ",
+        Package = " ",
+        Pencil = " ",
+        Plus = " ",
+        Project = " ",
+        Search = " ",
+        SignIn = " ",
+        SignOut = " ",
+        Tab = "",
+        Table = " ",
+        Target = " ",
+        Telescope = " ",
+        Text = " ",
+        Tree = "",
+        Triangle = "",
+        TriangleShortArrowDown = "",
+        TriangleShortArrowLeft = "",
+        TriangleShortArrowRight = "",
+        TriangleShortArrowUp = ""
     },
     diagnostics = {
-        BoldError = "",
-        Error = "",
-        BoldWarning = "",
-        Warning = "",
-        BoldInformation = "",
-        Information = "",
-        BoldQuestion = "",
-        Question = "",
-        BoldHint = "",
-        Hint = "󰌶",
-        Debug = "",
+        BoldError = "",
+        Error = " ",
+        BoldWarning = "",
+        Warning = " ",
+        BoldInformation = "",
+        Information = " ",
+        BoldQuestion = "",
+        Question = " ",
+        BoldHint = " ",
+        Hint = "",
+        Debug = " ",
         Trace = "✎"
     },
     misc = {
-        Robot = "󰚩 ",
-        Squirrel = " ",
-        Tag = " ",
-        Watch = "",
-        Smiley = " ",
-        Package = " ",
-        CircuitBoard = " "
+        Robot = " ",
+        Squirrel = " ",
+        Tag = " ",
+        Watch = " ",
+        Smiley = " ",
+        Package = " ",
+        CircuitBoard = " "
     }
 }
-
 ```
 
-+ [[language-server-configs | Language Server Configurations]]
+</details>
 
-+ Which-key
-    + [whichkey-repo](https://github.com/folke/which-key.nvim)
-    + configuration
+### Which-Key
+
+Pops up a hint when you start a leader-key sequence and you pause. The `mappings` table below lists every `<leader>…` group I expose.
+
+- Repository: [folke/which-key.nvim](https://github.com/folke/which-key.nvim)
 
 ```lua
 local SPEC = {
@@ -620,88 +641,45 @@ function SPEC.config()
         plugins = {
             marks = true,
             registers = true,
-            spelling = {
-                enabled = true,
-                suggestions = 20
-            },
+            spelling = {enabled = true, suggestions = 20},
             presets = {
-                operators = false,
-                motions = false,
-                text_objects = false,
-                windows = false,
-                nav = false,
-                z = false,
-                g = false
+                operators = false, motions = false, text_objects = false,
+                windows = false, nav = false, z = false, g = false
             }
         },
-        window = {
-            border = "rounded",
-            position = "bottom",
-            padding = {2, 2, 2, 2}
-        },
+        window = {border = "rounded", position = "bottom", padding = {2, 2, 2, 2}},
         ignore_missing = true,
         show_help = false,
         show_keys = false,
-        disable = {
-            buftypes = {},
-            filetypes = {"TelescopePrompt"}
-        }
+        disable = {buftypes = {}, filetypes = {"TelescopePrompt"}}
     }
 
-    local opts = {
-        mode = "n", -- NORMAL mode
-        prefix = "<leader>"
-    }
-
-    which_key.register(mappings, opts)
+    which_key.register(mappings, {mode = "n", prefix = "<leader>"})
 end
 
 return SPEC
 ```
 
-+ Cmp
-    + [cmp-repo](https://github.com/hrsh7th/nvim-cmp)
-    + configuration
+### Cmp (nvim-cmp)
+
+Completion engine with sources for LSP, snippets, buffer, path, emoji, and Copilot.
+
+- Repository: [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 ```lua
 local SPEC = {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = {
-        {
-            "hrsh7th/cmp-nvim-lsp",
-            event = "InsertEnter"
-        },
-        {
-            "hrsh7th/cmp-emoji",
-            event = "InsertEnter"
-        },
-        {
-            "hrsh7th/cmp-buffer",
-            event = "InsertEnter"
-        },
-        {
-            "hrsh7th/cmp-path",
-            event = "InsertEnter"
-        },
-        {
-            "hrsh7th/cmp-cmdline",
-            event = "InsertEnter"
-        },
-        {
-            "saadparwaiz1/cmp_luasnip",
-            event = "InsertEnter"
-        },
-        {
-            "L3MON4D3/LuaSnip",
-            event = "InsertEnter",
-            dependencies = {
-                "rafamadriz/friendly-snippets"
-            }
-        },
-        {
-            "hrsh7th/cmp-nvim-lua"
-        }
+        { "hrsh7th/cmp-nvim-lsp",    event = "InsertEnter" },
+        { "hrsh7th/cmp-emoji",       event = "InsertEnter" },
+        { "hrsh7th/cmp-buffer",      event = "InsertEnter" },
+        { "hrsh7th/cmp-path",        event = "InsertEnter" },
+        { "hrsh7th/cmp-cmdline",     event = "InsertEnter" },
+        { "saadparwaiz1/cmp_luasnip",event = "InsertEnter" },
+        { "L3MON4D3/LuaSnip",        event = "InsertEnter",
+            dependencies = { "rafamadriz/friendly-snippets" } },
+        { "hrsh7th/cmp-nvim-lua" }
     }
 }
 
@@ -712,7 +690,7 @@ function SPEC.config()
 
     vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg = "#6CC644"})
     vim.api.nvim_set_hl(0, "CmpItemKindTabnine", {fg = "#CA42F0"})
-    vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg = "#FDE030"})
+    vim.api.nvim_set_hl(0, "CmpItemKindEmoji",   {fg = "#FDE030"})
 
     local check_backspace = function()
         local col = vim.fn.col "." - 1
@@ -724,25 +702,20 @@ function SPEC.config()
     cmp.setup {
         snippet = {
             expand = function(args)
-                luasnip.lsp_expand(args.body) -- For `luasnip` users.
+                luasnip.lsp_expand(args.body)
             end
         },
         mapping = cmp.mapping.preset.insert {
-            ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "c"}),
-            ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "c"}),
-            ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "c"}),
-            ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "c"}),
-            ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), {"i", "c"}),
-            ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), {"i", "c"}),
-            ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}),
-            ["<C-e>"] = cmp.mapping {
-                i = cmp.mapping.abort(),
-                c = cmp.mapping.close()
-            },
-            -- Accept currently selected item. If none selected, `select` first item.
-            -- Set `select` to `false` to only confirm explicitly selected items.
-            ["<CR>"] = cmp.mapping.confirm {select = true},
-            ["<Tab>"] = cmp.mapping(
+            ["<C-k>"]       = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "c"}),
+            ["<C-j>"]       = cmp.mapping(cmp.mapping.select_next_item(), {"i", "c"}),
+            ["<Down>"]      = cmp.mapping(cmp.mapping.select_next_item(), {"i", "c"}),
+            ["<Up>"]        = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "c"}),
+            ["<C-b>"]       = cmp.mapping(cmp.mapping.scroll_docs(-1), {"i", "c"}),
+            ["<C-f>"]       = cmp.mapping(cmp.mapping.scroll_docs(1),  {"i", "c"}),
+            ["<C-Space>"]   = cmp.mapping(cmp.mapping.complete(),       {"i", "c"}),
+            ["<C-e>"]       = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
+            ["<CR>"]        = cmp.mapping.confirm {select = true},
+            ["<Tab>"]       = cmp.mapping(
                 function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
@@ -751,19 +724,14 @@ function SPEC.config()
                     elseif luasnip.expand_or_jumpable() then
                         luasnip.expand_or_jump()
                     elseif check_backspace() then
-                        -- require("neotab").tabout()
                         fallback()
                     else
-                        -- require("neotab").tabout()
                         fallback()
                     end
                 end,
-                {
-                    "i",
-                    "s"
-                }
+                { "i", "s" }
             ),
-            ["<S-Tab>"] = cmp.mapping(
+            ["<S-Tab>"]     = cmp.mapping(
                 function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
@@ -773,10 +741,7 @@ function SPEC.config()
                         fallback()
                     end
                 end,
-                {
-                    "i",
-                    "s"
-                }
+                { "i", "s" }
             )
         },
         formatting = {
@@ -785,13 +750,9 @@ function SPEC.config()
                 vim_item.kind = icons.kind[vim_item.kind]
                 vim_item.menu =
                     ({
-                    nvim_lsp = "",
-                    nvim_lua = "",
-                    luasnip = "",
-                    buffer = "",
-                    path = "",
-                    emoji = ""
-                })[entry.source.name]
+                        nvim_lsp = "", nvim_lua = "", luasnip = "",
+                        buffer = "", path = "", emoji = ""
+                    })[entry.source.name]
 
                 if entry.source.name == "emoji" then
                     vim_item.kind = icons.misc.Smiley
@@ -817,32 +778,23 @@ function SPEC.config()
             {name = "calc"},
             {name = "emoji"}
         },
-        confirm_opts = {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false
-        },
+        confirm_opts = {behavior = cmp.ConfirmBehavior.Replace, select = false},
         window = {
-            completion = {
-                border = "rounded",
-                scrollbar = false
-            },
-            documentation = {
-                border = "rounded"
-            }
+            completion  = {border = "rounded", scrollbar = false},
+            documentation = {border = "rounded"}
         },
-        experimental = {
-            ghost_text = false
-        }
+        experimental = {ghost_text = false}
     }
 end
 
 return SPEC
+```
 
-		  ```
+### None-ls
 
-+ None-ls
-    + [none-repo](https://github.com/nvimtools/none-ls.nvim)
-    + configurations
+Local formatting sources that don't need an LSP — runs stylua, prettier, black, clang-format, google-java-format on save.
+
+- Repository: [nvimtools/none-ls.nvim](https://github.com/nvimtools/none-ls.nvim)
 
 ```lua
 local SPEC = {
@@ -866,21 +818,16 @@ function SPEC.config()
             formatting.black,
             formatting.clang_format,
             formatting.google_java_format
-            -- formatting.prettier.with {
-            --   extra_filetypes = { "toml" },
-            --   -- extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
-            -- },
+            -- formatting.prettier.with { extra_filetypes = { "toml" } },
             -- formatting.eslint,
-            -- null_ls.builtins.diagnostics.flake8,
             -- diagnostics.flake8,
-            -- null_ls.builtins.completion.spell,
         }
     }
 end
 
 return SPEC
-
 ```
 
-### References
-+ [Ultimate Neovim Config | 2024 | Launch.nvim - YouTube](https://www.youtube.com/watch?v=KGJV0n70Mxs)
+## Reference
+
+- [Ultimate Neovim Config | 2024 | Launch.nvim — YouTube](https://www.youtube.com/watch?v=KGJV0n70Mxs)

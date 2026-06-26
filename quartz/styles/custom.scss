@@ -5,8 +5,8 @@
   --boldWeight: 800;
   /* Default Dark Mode Colors */
   --nav-hover: #FFFFFF;
-  --tag-bg: rgba(255, 255, 255, 0.1);
-  --tag-color: #ffb86c; /* Keeping your orange accent for tags */
+  --tag-color: #ffb86c; /* Editorial label color — warm orange for tags */
+  --tag-hover-color: #FFB86C; /* Same accent on hover for emphasis */
   /* This color is subtle, neutral, and professional */
   --heading-color: #E4E4E7;
   --heading-muted: #fb8500;
@@ -15,19 +15,33 @@
      Intentionally left at the heading color in light mode (see
      [saved-theme="light"] below) — the user prefers that look there. */
   --bold-color: #FFFFFF;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+  /* Code surfaces — dark in dark mode so syntax highlighting pops. */
+  --code-bg: #1f1f23;
+  --code-fg: #e4e4e7;
+  --code-border: #2d2d32;
+  --code-inline-bg: #2a2a30;
+  --code-inline-border: #353540;
 }
 
 /* 2. LIGHT MODE OVERRIDES */
 [saved-theme="light"] {
   /* In light mode, white text is invisible, so we use a dark gray or orange */
   --nav-hover: #ffb86c;
-  --tag-bg: rgba(0, 0, 0, 0.08);
-  --tag-color: #e67e22; /* A slightly darker orange for better legibility on white */
+  --tag-color: #b15c00; /* Deeper orange for paper background */
+  --tag-hover-color: #b15c00; /* Same color on hover — the underline carries the state */
   --alias-color: #4e4e4e;
   --heading-color: #27272A;
   --heading-muted: #B15C00;
   /* Match the heading color in light mode — user prefers the current look. */
   --bold-color: #2b2b2b;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  /* Code surfaces — keep the paper-like light surface in light mode. */
+  --code-bg: #f4f4f2;
+  --code-fg: #2b2b2b;
+  --code-border: #d8d8d4;
+  --code-inline-bg: #ececea;
+  --code-inline-border: #d8d8d4;
 }
 
 /* 3. EXPLORER / NAVIGATION */
@@ -71,24 +85,30 @@ strong, b {
   color: var(--bold-color);
 }
 
-/* 5. TAGS */
+/* 5. TAGS (editorial label)
+   Tags render as small caps-style labels with a # prefix (added by base.scss
+   via `a.internal.tag-link::before { content: "#"; }`). No background fill —
+   just colored text + a hover underline. Reads more like a section label
+   than a button, and avoids competing with body content for visual weight. */
 .tag-link {
-  /* Uses variable to switch between light/dark automatically */
-  color: var(--tag-color) !important;   
-  background-color: var(--tag-bg) !important;
-  
-  padding: 0.1rem 0.5rem;
-  border-radius: 4px;
+  background: transparent !important;
+  color: var(--tag-color) !important;
+  padding: 0 !important;
+  margin: 0 0.5rem 0 0 !important;
+  border-radius: 0 !important;
   text-decoration: none;
   font-size: 0.8em;
   font-weight: 600;
-  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Hover effect for tags */
+/* Hover state — only the underline appears; text color stays the same so the
+   label identity doesn't change. */
 .tag-link:hover {
-  background-color: #ffb86c !important;
-  color: #282a36 !important; /* Dark text for contrast on the orange hover */
+  color: var(--tag-hover-color) !important;
+  border-bottom-color: var(--tag-hover-color);
 }
 
 a.internal.alias {
@@ -160,24 +180,308 @@ article a.internal.alias:hover {
   text-decoration: none;
 }
 
+/* 13a. DETAILS — body padding (disclosure marker styles live further down) */
 details {
   padding-top: 0.7rem;
 }
 
+/* 7. TYPOGRAPHY RAMP
+   Heading sizes and weights are bumped from base.scss's flat 1.75/1.4/1.12/1rem.
+   h1/h2/h3 use --heading-color (high contrast). h4/h5/h6 use --heading-muted
+   (orange) so the hierarchy visually splits at level 3. Tightened line-heights
+   and negative letter-spacing on h1/h2 give the headings presence. */
 h1, h2, h3 {
   color: var(--heading-color);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
 }
 
 h4, h5, h6 {
   color: var(--heading-muted);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
   margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+h1 { font-size: 1.85rem; font-weight: 800; }
+h2 { font-size: 1.5rem;  font-weight: 700; }
+h3 { font-size: 1.2rem;  font-weight: 700; }
+h4 { font-size: 1rem;    font-weight: 600; }
+h5 { font-size: 0.95rem; font-weight: 600; }
+h6 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Article title override — base.scss sets .page article > h1 to 2rem flat.
+   This matches the ramp above and gives the title real weight. */
+.page article > h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* 7a. HEADING PRESENCE
+   Underline on h3 keeps some hierarchy without reading as a pipe.
+   The earlier left accent rule on h2 + article title was removed —
+   it visually read as a leading pipe character next to the heading text. */
+h3 {
+  position: relative;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--lightgray);
 }
 
 
+/* 8. PROSE READABILITY
+   Better line-height for paragraphs, tighter list rhythm, an HR that breathes.
+   No italic on blockquote — it conflicts with bold-color rules already in
+   place for `article blockquote > strong` (see section 4). */
+.page article p {
+  line-height: 1.7;
+  margin: 0.85rem 0;
+}
+
+.page article ul,
+.page article ol {
+  line-height: 1.65;
+  padding-left: 1.4rem;
+}
+
+.page article li {
+  margin: 0.3rem 0;
+}
+
+hr {
+  margin: 2.5rem auto;
+  height: 1px;
+  border: none;
+  background: linear-gradient(to right, transparent, var(--lightgray) 20%, var(--lightgray) 80%, transparent);
+}
+
+
+/* 9. CODE SURFACES
+   `pre` already has a 1px border from base.scss. We deepen the treatment
+   with a subtle elevation shadow, slightly larger radius, and a surface
+   color tied to the theme via --code-bg / --code-fg / --code-border.
+   Dark in dark mode so syntax highlighting pops; paper-like in light mode. */
+pre {
+  background-color: var(--code-bg);
+  color: var(--code-fg);
+  border-color: var(--code-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: var(--shadow-sm);
+  margin: 1rem 0;
+}
+
+/* Mermaid diagrams should still have no border — the shadow doesn't belong
+   on diagrams. The :has() selector resets the container around mermaid code. */
+pre:has(> code.mermaid) {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+code {
+  background-color: var(--code-inline-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--code-inline-border);
+  border-radius: 4px;
+  padding: 0.08rem 0.32rem;
+  font-size: 0.88em;
+}
+
+/* Code inside pre should not double up its border/background. base.scss
+   already sets `pre > code { background: none; padding: 0; }` — we
+   reinforce that defensively. The color comes from syntax highlighting. */
+pre > code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.85rem;
+  color: inherit;
+}
+
+/* Code inside article-headings shouldn't render as a chip — a fence-style
+   code span inside an h2 looks wrong. */
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+
+/* 10. ARTICLE CHROME
+     ContentMeta, Date, TagList, and Footer all render on every page.
+     ContentMeta gets muted color + dot separator instead of comma.
+     Date gets tabular numerals so numbers line up. TagList wrapper gets
+     breathing room. Footer gets a top hairline, muted text, and underline
+     links. */
+
+/* ContentMeta — replace comma separator with middle dot. */
+.content-meta {
+  color: var(--gray);
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  margin: 0.25rem 0 0.5rem 0;
+}
+
+.content-meta[show-comma="true"] > *:not(:last-child)::after {
+  content: "·";
+  margin-left: 0.5rem;
+  margin-right: 0.25rem;
+  color: var(--gray);
+  opacity: 0.7;
+}
+
+.content-meta time {
+  color: var(--darkgray);
+  font-variant-numeric: tabular-nums;
+}
+
+/* TagList wrapper — the .tags class is also styled inline by TagList.tsx;
+   the !important overrides win over the inline styles. */
+.tags {
+  gap: 0.5rem !important;
+  margin: 1.25rem 0 1.5rem 0 !important;
+  padding: 0 !important;
+}
+
+/* Footer surface — top hairline, muted text, generous vertical padding.
+   The grid area is set in base.scss (grid-area: grid-footer); we only
+   layer visuals on top. */
+footer {
+  margin-top: 3rem;
+  padding: 1.5rem 0 1rem 0;
+  border-top: 1px solid var(--lightgray);
+  color: var(--gray);
+  font-size: 0.85rem;
+  opacity: 1;
+
+  & p {
+    color: var(--gray);
+    margin: 0;
+  }
+
+  & a {
+    color: var(--darkgray);
+    text-decoration: underline;
+    text-decoration-color: var(--lightgray);
+    text-underline-offset: 3px;
+  }
+
+  & a:hover {
+    color: var(--secondary);
+    text-decoration-color: var(--secondary);
+  }
+}
+
+
+/* 11. CALLOUTS & BLOCKQUOTES
+     callouts.scss sets the per-callout color/border/bg via custom properties.
+     We only adjust the container shape, padding, and accent-bar treatment. */
+.callout {
+  border-radius: 8px;
+  border-width: 1px;
+  padding: 0 1rem;
+  margin: 1.25rem 0;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.callout-title {
+  padding: 0.85rem 0;
+}
+
+.callout-content {
+  padding: 0.25rem 0 0.85rem 0;
+}
+
+/* Blockquote — base.scss already gives a 3px solid var(--secondary) left border
+   with 1rem padding-left. We deepen it and align with the new surface
+   treatment. No italic (would conflict with bold-color rules). */
+blockquote {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--secondary);
+  background-color: color-mix(in srgb, var(--secondary) 6%, transparent);
+  border-radius: 0 6px 6px 0;
+  color: var(--darkgray);
+}
+
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child  { margin-bottom: 0; }
+
+
+/* 12. SEARCH & BREADCRUMBS
+     Polished hover and focus states on the search button and input.
+     Breadcrumbs get a dim current page and hoverable ancestor crumbs. */
+.search > .search-button {
+  background-color: var(--lightgray);
+  border-color: transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.search > .search-button:hover {
+  background-color: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  border-color: var(--secondary);
+}
+
+.search > .search-button:hover .search-path {
+  stroke: var(--secondary);
+}
+
+/* Search input — focus shows a glow ring tied to the accent color. */
+.search > .search-container .search-space > input.search-bar:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 25%, transparent);
+}
+
+/* Breadcrumbs — tight spacing, dim current page, hover lift on ancestors. */
+.breadcrumb-container {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-top: 0.5rem;
+}
+
+.breadcrumb-element a {
+  color: var(--darkgray);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.breadcrumb-element a:hover {
+  color: var(--secondary);
+  border-bottom-color: var(--secondary);
+}
+
+.breadcrumb-element p {
+  color: var(--gray);
+  margin: 0 0.25rem;
+}
+
+/* Last crumb is the current page — no link, dimmer text, accent color. */
+.breadcrumb-element:last-child a {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+
+// 13. DETAILS DISCLOSURE
 // 1. Hide the default browser triangle
 details summary::-webkit-details-marker {
   display: none;
@@ -212,17 +516,15 @@ details[open] > summary::before {
   color: #FFB86C; 
 }
 
+/* 14. TEXT HIGHLIGHT */
 span.text-highlight {
   background-color: #97979759;
   border-radius: 0px;
 }
 
 
-/* -----------------------------------------
-   Fix: Capture scroll wheel over empty space 
-   in the Explorer sidebar
------------------------------------------ */
-
+/* 15. EXPLORER SCROLL ISOLATION
+   Capture scroll wheel over empty space in the Explorer sidebar */
 .explorer-content {
   /* Captures the mouse wheel anywhere inside the container */
   pointer-events: all !important; 
@@ -237,7 +539,7 @@ span.text-highlight {
 }
 
 
-/* Make the images center for a class */
+/* 16. IMAGE CENTER HELPER */
 
 .make-it-center {
   display: flex;

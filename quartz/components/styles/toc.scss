@@ -64,6 +64,14 @@ ul.toc-content.overflow {
     }
   }
 
+  & > li > a:hover {
+    opacity: 0.9;
+    color: var(--secondary);
+    border-left: 2px solid var(--secondary);
+    padding-left: 0.25rem;
+    margin-left: -0.25rem;
+  }
+
   @for $i from 0 through 6 {
     & .depth-#{$i} {
       padding-left: calc(1rem * #{$i});

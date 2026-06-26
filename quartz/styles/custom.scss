@@ -77,6 +77,65 @@ a.internal {
  background-color: transparent;
 }
 
+/* 6. INTERNAL BODY WIKILINKS
+   Applies only to wikilinks rendered inside article prose.
+   Sidebar Explorer, Backlinks panel, tag lists and heading anchors are
+   untouched. */
+article a.internal {
+  background-color: var(--highlight);
+  border-bottom: 1px solid var(--secondary);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  margin: 0 0.05rem;
+  color: var(--secondary);
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    border-bottom-width 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
+}
+
+article a.internal:hover {
+  background-color: color-mix(in srgb, var(--tertiary) 22%, transparent);
+  border-bottom-color: var(--tertiary);
+  border-bottom-width: 2px;
+  padding-bottom: calc(0.05rem - 1px);
+  box-shadow: 0 1px 0 0 var(--tertiary);
+  color: var(--tertiary);
+  text-decoration: none;
+}
+
+/* Aliased wikilinks — same chip + accent border + accent text as plain
+   wikilinks. The chip + border already distinguish them as links; no need
+   to mute the text color too. */
+article a.internal.alias {
+  background-color: var(--highlight);
+  border-bottom: 1px solid var(--secondary);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  margin: 0 0.05rem;
+  color: var(--secondary);
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    border-bottom-width 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
+}
+
+article a.internal.alias:hover {
+  background-color: color-mix(in srgb, var(--tertiary) 22%, transparent);
+  border-bottom-color: var(--tertiary);
+  border-bottom-width: 2px;
+  padding-bottom: calc(0.05rem - 1px);
+  box-shadow: 0 1px 0 0 var(--tertiary);
+  color: var(--tertiary);
+  text-decoration: none;
+}
+
 details {
   padding-top: 0.7rem;
 }

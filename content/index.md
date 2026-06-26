@@ -8,9 +8,15 @@ Hello.. myself [Jetlee](https://in.linkedin.com/in/jetleejoy) and this is my dig
 
 ### What is a digital garden ?
 
-An online space, that acts as living, evolving collections of thoughts and ideas. To put it simply  it is an online version of a personal wiki or notebook that can be shared publicaly with the   goal of exploring and growing knowledge over time
+An online space, that acts as living, evolving collections of thoughts and ideas. To put it simply it is an online version of a personal wiki or notebook that can be shared publicaly with the goal of exploring and growing knowledge over time.
 
-#### Contents
-1. [[scribbles/]]
-2. [[compiles/]]
-3. [[project/]]
+### Contents
+
+- [[studies/]] — long-form notes & essays
+- [[art/]] — drawing practice
+- [[kalari/]] — Kalaripayattu study & practice
+- [[linux/]] — system administration
+- [[web/]] — web platform notes
+- [[code/]] — language references, snippets, scripts
+- [[setups/]] — toolchain configurations
+- [[projects/]] — multi-session builds

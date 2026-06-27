@@ -1,7 +1,7 @@
 ---
 title: Preyogangal
 draft: false
-date: 2026-06-27T00:00:00.000Z
+date: 2026-06-27
 tags: [practice, health, martial-art]
 ---
 

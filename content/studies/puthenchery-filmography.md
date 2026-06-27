@@ -1,5 +1,6 @@
 ---
 title: Gireesh Puthenchery Filmography
+description: Filmography of lyricist Gireesh Puthenchery — films, co-lyricists, composers, and songs.
 draft: false
 date: 2025-12-27
 tags: [music]

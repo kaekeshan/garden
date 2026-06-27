@@ -1,5 +1,6 @@
 ---
 title: Memory management and Internals of List and Tuples in CPython
+description: How CPython stores Python objects in memory, and what that means for choosing between lists and tuples in your code.
 draft: false
 tags: [python, reference]
 date: 2025-12-06

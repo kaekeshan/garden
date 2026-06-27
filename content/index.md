@@ -1,7 +1,8 @@
 ---
 title: Digital Garden
 draft: false
-date: 2025-11-30T00:00:00.000Z
+tags: [home, index]
+date: 2025-11-30
 ---
 
 Hello.. myself [Jetlee](https://in.linkedin.com/in/jetleejoy) and this is my digital garden.

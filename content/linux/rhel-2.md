@@ -1,32 +1,33 @@
 ---
 title: Red Hat Enterprise Linux - part 02
+description: Red Hat Enterprise Linux part 2 — improving command-line productivity, scheduling tasks with at and cron, managing temporary files, tuning, ACLs, partitions, fstab, swap, and LVM.
 draft: false
 date: 2025-12-03
-tags: [linux,dev]
+tags: [linux, dev]
 ---
 ## Improve command line productivity
 ### Theory
-1. __Bash scripts__
+1. **Bash scripts**
     - using vim editor, extension is **.sh**
-        - script example 
+        - script example
             ```bash
            #! /bin/bash
-           
+
           echo hello world
           ```
-                    
-            - give execution permission using `chmod +x test.sh` 
+
+            - give execution permission using `chmod +x test.sh`
             - execute the file using `./test.sh`
         - script
             ```bash
            #! /bin/bash
-           
+
           if [ 10 == 10 ]
           then
           echo they are equal
-          fi 
+          fi
           ```
-                    
+
          - script
            ```bash
            #! /bin/bash
@@ -37,7 +38,7 @@ tags: [linux,dev]
            echo they are not equal
            fi
            ```
-                    
+
         - complex script
             - vim userlist
                 ```bash
@@ -46,11 +47,11 @@ tags: [linux,dev]
                user3
                user4
                ```
-               
+
             - vim new.sh
                 ```bash
                 #! /bin/bash
-                
+
                if [ $# == 0 ]
                then
                echo enter the file name
@@ -64,15 +65,15 @@ tags: [linux,dev]
                echo enter a valid filename
                fi
                ```
-                    
+
                 - chmod +x new.sh
                 - ./new.sh // no file input
                 - ./new.sh userl // invalid filename
                 - ./new.sh  userlist
                 - tail -n 5 /etc/passwd
-                
-2. __Grep command__
-    - used for pattern filtering  
+
+2. **Grep command**
+    - used for pattern filtering
         e.g. : grep root /etc/passwd
     - option
         - -i // case insensitive
@@ -99,7 +100,7 @@ tags: [linux,dev]
 ## Schedule future tasks
 ### Theory
 
-1. __Scheduling__
+1. **Scheduling**
     - **Deferred** user task
         - run a command or set of command at a set point in future, called job or task
         - the term deferred indicates that these tasks or jobs are going to run in the future
@@ -136,11 +137,11 @@ tags: [linux,dev]
             - e.g. 5,10-13,17,..
             - */x indicate an interval of x, for example, */7 in minute column runs a job every seven minutes.*
         - examples
-            - `0 9 2 2 * /usr/local/bin/yearly_backup`  
+            - `0 9 2 2 * /usr/local/bin/yearly_backup`
               run the specified path at exactly 9.00 am on Feb 2nd, every year
-            - `*/5 9-16 * Jul 5 echo "Chime"` 
+            - `*/5 9-16 * Jul 5 echo "Chime"`
               sends an email containing the word chime to the owner of this job, every five minutes between 9 a.m and 5 p.m. on every Friday in July
-            - `58 23 * * 1-5 /usr/local/bin/daily/_report`  
+            - `58 23 * * 1-5 /usr/local/bin/daily/_report`
               run the command /usr/local/bin/daily_report every weekday at two minutes before midnight.
     - Recurring system jobs
         - recurring jobs of system admins
@@ -167,7 +168,7 @@ tags: [linux,dev]
             - delay in minutes // amount of time that crond daemon should wait before starting this job
             - job identifier // the unique name the job is identified as in the log messages.
             - command // the command to be executed
-2. __Managing temporary files__
+2. **Managing temporary files**
     - modern system require large no of temp files and directories
      - some application use volatile directories under /run to store temp files
      - if the sys reboots or loses power, the files are removed
@@ -179,30 +180,30 @@ tags: [linux,dev]
         - this command reads configuration files from /usr/lib/tmpfiles.d/* .conf, /run/tmpfiles.d/*.conf, and /etc/tmpfiles.d/*.conf
         - any files and directories marked for deletion in those config files is removed, and any files and directories marked for creation will be created with the correct permission if necessary
 
-3. __Cleaning temp files with sytemd timer__
+3. **Cleaning temp files with sytemd timer**
 
     - to ensure that long running systems do not fill up their disks with stale data, a systemd timer unit called systemd-tmpfiles-clean.timer triggers systemd-tmpfiles-clean.service on a regular interval
     - which executes the `sytemd-tmpfiles —clean` command.
     - the systemd timer unit config files have a [timer] section that indicate how often tthe service with the same name should be started
         - `#sytemctl cat systemd-tmpfiles-clean.timer` // to view contents of the systemd-tmpfilesclean.timer unit config file.
 
-4. __Format of the config files of `systemd-tmpfiles`__
+4. **Format of the config files of `systemd-tmpfiles`**
 
 ```bash
 Type, Path, Mode , UID, GID , Age, Argument
 ```
 
 
-5. __Examples__
+5. **Examples**
 
-    - `d /run/systemd/seats 0755 root root` 
+    - `d /run/systemd/seats 0755 root root`
     when creating files and directories, create the /run/systemd/seats directory if it does not yet exist. owned by the user root and group root, with permissions set to rwxr-xr-x
-    - `D /home/student 0700 student student 1d`  
+    - `D /home/student 0700 student student 1d`
     create /home/student directory if it does not yet exist. if it does, empty it of all contents. When systemd-tmpfiles —clean is run, remove all files which have not been accessed, changed, or modified in more than one day.
-    - `L /run/fstablink —root root -/etc/fstab`  
+    - `L /run/fstablink —root root -/etc/fstab`
     create the symbolic link /run/fstablink pointing to /etc/fstab
 
-6. __Configuration file precedence__
+6. **Configuration file precedence**
 
     - config files can exist in three places
         - **/etc/tmpfiles.d/*.conf**
@@ -213,7 +214,7 @@ Type, Path, Mode , UID, GID , Age, Argument
     - files under **/etc/tmpfiles.d/** are meant for administrators to configure custom temporary locations, and to override vendor provided defaults
 
 ### commands
-            
+
 - Inspecting and managing deferred user jobs
 - `atq` or `at -l` // to get an overview for the pending jobs for the current user
 - `at -c JOBNUMBER` // to inspect the actual commands that will run when a job is executed
@@ -230,22 +231,22 @@ Type, Path, Mode , UID, GID , Age, Argument
 ## Tuning System Performance
 ## Theory
 
-1. __Tuned daemon__
+1. **Tuned daemon**
 
     - applies tuning adjustments both statically and dynamically, via tuning profiles
     - the tuned daemon applies system settings when the service starts or upon selection of a new tuning profile
 
-2. __Configuring static tuning__
+2. **Configuring static tuning**
 
     - it configs predefined kernel parameters in profiles that tuned daemon applies at run times.
     - with static tuning , kernel parameters are set for overall performance expectations, and are not adjusted as activity level changes.
 
-3. __Configuring dynamic tuning__
+3. **Configuring dynamic tuning**
 
     - here, the tuned daemon monitors system activities and adjust settings depending on runtime behavior changes.
     - it is continuously adjusting tuning to fit the current workload, starting with the initial settings declared in the chosen tuning profile
 
-4. __Selecting a tuning profile__
+4. **Selecting a tuning profile**
 
     - types
         - power saving profiles
@@ -254,7 +255,7 @@ Type, Path, Mode , UID, GID , Age, Argument
             - high throughput for storage and network
             - virtual machine performance
             - virtualization host performance
-                    
+
     - available in rhel8
         - Balanced : compromise between power saving and performance boost
         - Desktop : derivative of balanced, fast response to interactive apps
@@ -267,7 +268,7 @@ Type, Path, Mode , UID, GID , Age, Argument
         - virtual guest  : max performance on vm
         - virtual host : max performance if it acts as a host for virtual machines.
 
-5. __Linux process scheduling and multitasking__
+5. **Linux process scheduling and multitasking**
 
     - technique for running more processes than the processing units is called time-slicing or multitasking
     - process are given different levels of importance
@@ -298,32 +299,32 @@ Type, Path, Mode , UID, GID , Age, Argument
 - `nice -n 15 sha1sum &` : starts the command as a b.g. job with a user defined nice value.
 - setting nice value for running process
 - `renice -n 19 processid` : change form current nice level to the desired nice level.
-            
+
 
 ## Control access to files with ACLs
 ### Theory
 
-1. __Interpreting file ACL__
+1. **Interpreting file ACL**
 
     - Access Control list is used to grand access to users comes under others group for a file or directory
    - these additional users and groups are called named users and named groups respectively, because they are named not in a long listing but rather within an ACL
 
-2. __File system ACL support__
+2. **File system ACL support**
 
     - file systems need to be mounted with ACL support enabled.
     - XFS file system have built in ACL support
     - other file systems such as ext3 or ext4 created on rhel8 have acl option enabled by default
     - to enable file sys acl support, user acl option with the mount command or in the file system's entry in /etc/fstab config file
 
-3. __Viewing and interpreting acl permissions__
+3. **Viewing and interpreting acl permissions**
 
     - ls -l <file/dir> // only minimal acl settings details
     - + sign at the end of 10 char permission string indicates the existence of an extended acl structure with entries
    - `getfacl <file | /directory>`
-        - example  
-        ![](Untitled%202.png)
-                    
-4. __ACL mask__
+        - example
+        ![Output of getfacl on a file with ACL entries](../assets/red-hat/getfacl-example.png)
+
+4. **ACL mask**
     - denotes the maximum permission that you can grant to named users, group owner and named groups.
     - it does not restrict the permission of the file owner or other users
     - all files and dir implemented in acl have an acl mask
@@ -331,7 +332,7 @@ Type, Path, Mode , UID, GID , Age, Argument
     - it will be calculated and added automatically if it is not explicitly set, but could also inherited form a parent directory default mask setting
     - by default, the mask is recalculated whenever any of the affected acls are added modified or deleted
 
-5. __Changing ACL file permissions__
+5. **Changing ACL file permissions**
 
     - setfacl to add modify or remove standard acl on files and directories
     - r - read, x - executer, w - write
@@ -347,14 +348,14 @@ Type, Path, Mode , UID, GID , Age, Argument
     - `default:m::rx /directory` : read and execute permission set as the default mask
     - `default:user:mary:rx /directory` : named user granted initial read permission for new files, and read and execute permissions for new subdirectories
 - ACL on systemd jounal files
-    - `getfacl /run/log/journal/cb44....8ae2/system.journal`  
+    - `getfacl /run/log/journal/cb44....8ae2/system.journal`
 
-    ![](Untitled%203.png)
+    ![getfacl output on a systemd journal file](../assets/red-hat/getfacl-systemd-journal.png)
 
 - ACL on systemd managed devices
-    - `getfacl /dev/sr0`  
+    - `getfacl /dev/sr0`
 
-    ![](Untitled%204.png)
+    ![getfacl output on a systemd-managed block device](../assets/red-hat/getfacl-systemd-device.png)
 
 - setfacl examples
     - `setfacl -m u:name:rX file` //user of named user
@@ -375,26 +376,26 @@ Type, Path, Mode , UID, GID , Age, Argument
 ## Managing SELINUX security
 ### Theory
 
-1. __SELINUX__
+1. **SELINUX**
 
     - security enhanced linux
     - protect user data form compromised services
     - user, group, other based model known as **discretionary access model**;
     - SELINUX provides an additional layer of security that is object based and controlled by more sophisticated rules, known as **mandatory access control.**
 
-2. __Why ?__
+2. **Why ?**
 
     - enforces access rules preventing a weakness in one application from affecting other applications or the underlying system. // a weakness in one part of system does not spread to other parts of system.
     - extra layer of security
     - high learning curve, but effective
     - if selinux works poorly with a particular subsystem, you can turn off enforcement for that specific service until you find a solution to the underlying problem
 
-3. __SELinux modes__
+3. **SELinux modes**
 
     - enforcing // default : enforcing a set of access rules
     - permissive // records warning for violation of rules. Used for testing and troubleshooting.
     - disabled : selinux is turned off entirely, no selinux violations are denied, nor even recorded,
-4. __Basic concepts__
+4. **Basic concepts**
     - has rules that determine which process can access which files, directories, and ports.
     - every file, process, directory and port has a special security label called an **SELinux context**.
     - context is a name used by selinux security policy to determine whether a process can access a file , directory or port.
@@ -405,12 +406,12 @@ Type, Path, Mode , UID, GID , Age, Argument
         - type
         - sensitivity
     - type context names usually end with \_t
-    - targeted policy : the default policy enabled in rhel: rules in targeted policy is based on type context.  
+    - targeted policy : the default policy enabled in rhel: rules in targeted policy is based on type context.
 
     anatomy of selinux file context:
     `system_u:object_r:password_file_t:s0`
-                
-5. __SELinux access example__
+
+5. **SELinux access example**
     - apache : httpd_t
     - mariaDB : msqld_t
     - /var/www/html : httpd_sys_content_t
@@ -427,12 +428,12 @@ Type, Path, Mode , UID, GID , Age, Argument
 ### Commands
 - change current selinux mode
     - `setenforce 0` // permissive
-    - `setenforce 1` // enforcing  
-    To change permanently  
+    - `setenforce 1` // enforcing
+    To change permanently
     - /etc/selinux/cofig : change mode mannualy
 - initial selinux context
-    - -Z displays the context of a file.  
-    `ls -Z /var/www/html/index.html` 
+    - -Z displays the context of a file.
+    `ls -Z /var/www/html/index.html`
     - -Zd displays the context of a directory
 - change context
     - semanage fcontext : declare the default labeling for a file
@@ -462,7 +463,7 @@ Type, Path, Mode , UID, GID , Age, Argument
 ## Managing Basic storage
 ### Theory
 
-1. __Partition__
+1. **Partition**
 
     - divide a hard drive into multiple logical units, called partitions
     - sys admin can use diff. partitions for diff. purposes.
@@ -472,7 +473,7 @@ Type, Path, Mode , UID, GID , Age, Argument
         - create a separate area for memory swapping.
         - limit disk space user to improve the performance of diagnostic tools and backup-imaging.
 
-2. __Types of partitionsi__
+2. **Types of partitionsi**
 
     - MBR : Master Boot Record Partition scheme
         - applied on sys running BIOS firmware
@@ -490,8 +491,8 @@ Type, Path, Mode , UID, GID , Age, Argument
         - parted - partition editor for both MBR and GPT
         - parted command takes the device name of the whole disk as the first argument and one or more subcommands
 
-3. __/etc/fstab fields__  
-![](Untitled%205.png)  
+3. **/etc/fstab fields**
+![Fields of an /etc/fstab entry, in order](../assets/red-hat/fstab-fields.png)
 - first field : Device name or UUID
 - second field : directory mount point
 - third field : file system type
@@ -499,12 +500,12 @@ Type, Path, Mode , UID, GID , Age, Argument
 - fifth field : dump command to back up device.
 - last field : fsck order filed , determines if the fsck command should be run at system boot to verify that the file system is clean
 
-4. __Managing swap space__
+4. **Managing swap space**
 
     - area of disk under linux kernel subsystem
     - swap space is used to supply system RAM by holding inactive pages of memory
     - combined system ram + swap space = virtual memory
-        - if memory usage > limit kernel.search(RAM) // kernel looks in the idle memory pages assigned to process in ram.  
+        - if memory usage > limit kernel.search(RAM) // kernel looks in the idle memory pages assigned to process in ram.
         - kernal.write(idle_pages, swap_area) // kernel writes the idle pages to the swap area and reassigns the ram pages to other processes
         - if program→request_access_to_page_on disk kernal.write(idle_pages, swap_area) then recalls the needed page from the swap area.
         - swap area reside on disk. hence slow compared to ram. Hence swap is not a sustainable solution for insufficient RAM.
@@ -542,23 +543,23 @@ Type, Path, Mode , UID, GID , Age, Argument
    - run udevadm settle
         - alternative to interactive mode :
         `parted /dev/vdb mkpart primary xfs 2048s 1000MB`
-                
+
 - creating partitions : GPT
     - specify the disk device
     - parted /dev/vdb
     - use mkpart subcommand to create a new primary or extended partition
         - mkpart
     - indicate the file system type that you want to create on the partition. eg: xfs
-    - specify the sector on the disk that the new partition starts on.  
+    - specify the sector on the disk that the new partition starts on.
       eg: 2048s
-    - specify the disk sector where the new partition should end.eg. 1000MB 
+    - specify the disk sector where the new partition should end.eg. 1000MB
         - size = End - Start
     - exit parted : quit
     - run udevadm settle
         - alternative to interactive mode :
     `parted /dev/vdb mkpart userdata primary xfs 2048s 1000MB`
     // userdata is the name of the partition
-                
+
 - deleting partition
     - specify the disk : parted /dev/vdb
     - identify the partition number of the partition to delete : print
@@ -570,8 +571,8 @@ Type, Path, Mode , UID, GID , Age, Argument
 - mount file system
     - mount /dev/vdb1/mnt
     - persistently mounting file system on boot
-        - create an entry in /etc/fstab file (white-space-delimited file with six files per line) : for UUID : use blkid command  
-        ![](Untitled%206.png)
+        - create an entry in /etc/fstab file (white-space-delimited file with six files per line) : for UUID : use blkid command
+        ![Persistent mount entry example in /etc/fstab](../assets/red-hat/fstab-mount-entry.png)
         - reload the daemon - `systemctl daemon -reload`
         - use `mount -a` to mount the system
 - create a swap partition
@@ -582,14 +583,14 @@ Type, Path, Mode , UID, GID , Age, Argument
     - start
     - end
     - print
-    - udevadm settle   
+    - udevadm settle
   = formatting the device
     - mkswap /dev/vdb2
 - activate and deactivate swap
     - swapon <device>
     - swapoff <device>
     - for persistent activation : create entry in /etc/fstab
-    ![](Untitled%207.png)
+    ![Swap partition entry in /etc/fstab](../assets/red-hat/swap-fstab-entry.png)
     - swapon -a : activate all swaps
     - systemctl daemon -reload
     - free -h : display virtual memory status
@@ -597,26 +598,26 @@ Type, Path, Mode , UID, GID , Age, Argument
     - pri command for specifying priority
     - by default, swap space are used sequentially
    - use pri option in /etc/fstab [fifth field]
-   - kernel uses last entry first, pri - 10, then second and finally first. default pri value = -2  
-   ![](Untitled%208.png)  
+   - kernel uses last entry first, pri - 10, then second and finally first. default pri value = -2
+   ![Swap priority example using `pri` in /etc/fstab](../assets/red-hat/swap-priority-fstab.png)
 
 ## Managing Logical Volumes
 ### Theory
 
-1. __LVM : logical volume management__
+1. **LVM : logical volume management**
 
     - if a file system that hosts a logical volume needs more space, it can be allocated from the free space in its volume groups and the file system can be resized
     - if a disk starts to fail, replacement disk can be registered as a physical volume with the volume group and the logical volume's extents can be migrated to the new disk.
 
-2. __LVM definitioni__
+2. **LVM definitioni**
 
     - ==physical device== : storage device. These are block devices and could be disk partitions, whole disks etc.
     - ==physical volumes (PV)== : one must initialize a device as a physical volume before using it in LVM system.
     LVM tools segment physical volumes into Physical extents (PEs), which act as the smallest block in a physical volume.
     - ==volume group (VGs)== : storage pool made up of one or more than PVs. This is a functional equivalent of a whole disk in basic storage. A PV can only be allocated into a single GV.
-    - ==Logical volume(LVs)== : created from free physical extents in a VG and provide the storage for apps, users etc.  
-    LVs are collections of logical extents, which map to physical extents, the smallest chunks of a PV.  
-![](Untitled%209.png)
+    - ==Logical volume(LVs)== : created from free physical extents in a VG and provide the storage for apps, users etc.
+    LVs are collections of logical extents, which map to physical extents, the smallest chunks of a PV.
+![Layout of physical volumes, volume groups, and logical volumes](../assets/red-hat/lvm-pv-vg-lv-layout.png)
 
 3. Extending and reducing a volume group
     - add more disk space to a volume group by adding additional physical volume, called extending the volume group. Assign new physical extents from the additional physical volumes to logical volumes
@@ -626,13 +627,13 @@ Type, Path, Mode , UID, GID , Age, Argument
 ### Commands
 - creating a logical volume
     - prepare the device
-        - `parted -s /dev/vdb mkpart` 
+        - `parted -s /dev/vdb mkpart`
         - `primary 1mib 269mib`
-                
+
         - `parted -s /dev/vdb set 1 lvm on`
     - create a physical volume
         - `pvcreate /dev/vdb1`
-    - create the volume group 
+    - create the volume group
         - `vgcreate vg01 /dev/vdb1`
     - create a logical volume
         - `lvcreate -L 128M` : size exactly 128 Mib
@@ -641,7 +642,7 @@ Type, Path, Mode , UID, GID , Age, Argument
         - `mkfs -t xfs /dev/vg01/lv01`
         - `mkdir /mnt/data`
     - add an entry to the /etc/fstab file
-       - `/dev/vg01/lvo1 /mnt/data xfs defaults 0 0`  
+       - `/dev/vg01/lvo1 /mnt/data xfs defaults 0 0`
        - `mount /mnt/data`
 - remove a logical volume
     - unmount lv
@@ -658,7 +659,7 @@ Type, Path, Mode , UID, GID , Age, Argument
     - **lvdisplay /dev/vg01/lv01** : display lv
 - extending a volume group
     - prepare a physical device and create a physical volume
-        - `parted -s /dev/vdb mkpart` 
+        - `parted -s /dev/vdb mkpart`
         - `primary 1027 mib 1539 mib`
         - `parted -s /dev/vdb set 3 lvm on`
         - `pvcreate /dev/vdb3`
@@ -672,13 +673,13 @@ Type, Path, Mode , UID, GID , Age, Argument
     - reduce the vg
         - `vgreduce vg01 /dev/vdb3`
 - extending a logical volume and xfs file system
-    - extending a logical volume 
+    - extending a logical volume
         - `lvextend -L +300M /dev/vg01/lv01`
     - extending the file system
         - `xfs_growfs /mnt/data`
-- extending a logical volume and ext4 file system  
+- extending a logical volume and ext4 file system
     - lvextend -l +extents /dev/vgname/lvname
-        - extend the file system  
+        - extend the file system
         `resize2fs /dev/vg01/lv01i`
 - extending a logical volume and swap space
     - verify the volume group has available space
@@ -687,7 +688,7 @@ Type, Path, Mode , UID, GID , Age, Argument
         - `swapoff -v /dev/vgname/lvname`
     - extend the logical volume
         - `lvextend -l +extents /dev/vgname/lvname`
-    - format the logical  volume as swap space  
+    - format the logical  volume as swap space
         - `mkswap /dev/vgname/lvname`
-    - activate swap space  
+    - activate swap space
         - `swapon -va /dev/vgname/lvname`

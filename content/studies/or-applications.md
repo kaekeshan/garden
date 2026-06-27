@@ -1,11 +1,12 @@
 ---
 title: Applications of Operational Research
+description: As we know, decision making in today's social and economic environment has become a very complex task and high cost and rapid changes of tech , materials, labor along with competitive pressure and ...
 draft: false
 date: 2025-12-06
 tags: [mathematics]
 ---
 
-### Why Operation Research 
+### Why Operation Research
 
 As we know, decision making in today's social and economic environment has become a very complex task and high cost and rapid changes of tech , materials, labor along with competitive pressure and so many similar factors and viewpoints in social, political and economical fields greatly increased the difficulty in managerial decision making. Knowledge and technology are rapidly changing and  different problems with very little or no precedence continuously arises, well structured problems are routinely optimized at the operational level of org and increased attention is now focused on broader strategic issues.
 
@@ -17,7 +18,7 @@ A decision maker while solving a real life problem should examine the problem in
 
 Consider a problem where an investor seeking advice for investments in three alternatives: Stock Market, Real Estate, and Bank Deposit.
 
-To suggest an acceptable solution, we have to consider certain quantitative factors like financial ratios from the balance sheets of several firms whose stock are under consideration; real estate companies' cash flows and rates of return for the investment property; how much the investment will be worth in future when deposited at a bank at a given interest rate for certain number of years, need to be examined. 
+To suggest an acceptable solution, we have to consider certain quantitative factors like financial ratios from the balance sheets of several firms whose stock are under consideration; real estate companies' cash flows and rates of return for the investment property; how much the investment will be worth in future when deposited at a bank at a given interest rate for certain number of years, need to be examined.
 
 However, along with these quantitative factors, qualitative factors like weather, state and central policies, new technology , the political situation etc.. also need to be considered before suggesting a solution.
 
@@ -63,13 +64,13 @@ At the same time, prof RS Verma, also set up an OR team at Defense Science Labor
 
 In 1953, prof.PC Mahalanobis established and OR team in Indian Statistical Institute, Kolkata to solve problems related to national planning and survey.
 
-The OR Society of India (ORSI) was founded in 1957 and started publishing its journal OPSEARCH from 1964. 
+The OR Society of India (ORSI) was founded in 1957 and started publishing its journal OPSEARCH from 1964.
 
 In the same year, India along with Japan became a member of the International Federation of Operational Research Societies(IFORS) with its headquarters in London.
 
 ---
 
-> "O.R. is the art of giving bad answer to problems which otherwise have worse answer"       - T.L Saaty 
+> "O.R. is the art of giving bad answer to problems which otherwise have worse answer"       - T.L Saaty
 
 ---
 
@@ -96,7 +97,7 @@ In the same year, India along with Japan became a member of the International Fe
 - Defense : Today's technology allows the possibility of war via air, land and water. Hence it is necessary to formulate the optimum approaches for maximum benefit. O.R. helps military personals to select best strategies or course of actions to win the battle.
 
 - Hospitals
-- In life Insurance Policies : O.R. methodologies are useful to L.I.C to decide the premium rates of various policies 
+- In life Insurance Policies : O.R. methodologies are useful to L.I.C to decide the premium rates of various policies
 
 ---
 
@@ -126,7 +127,7 @@ In the same year, India along with Japan became a member of the International Fe
 1. Decide the number of machines that can be manned by a single operator.
 2. Study time lost due to various causes- waiting time, hunting time, queue time, transit time and the like.
 3. Decide optimum allocation of job to the facilities and the optimum sequence in which jobs should be performed.
-4. Physical distribution 
+4. Physical distribution
 5. Facility planning
 
 ### Quality Control
@@ -163,14 +164,14 @@ In the same year, India along with Japan became a member of the International Fe
 1. Assess the vulnerabilities in energy and utility systems, also creating prediction models for future vulnerabilities. Tools like '@risk' can be used for the assessment. An example is using simulation model to find potential output results of impact of storm, thunder like phenomenons on electricity.
 2. NCAA predictive models developed using Bayesian probability, Markov chain models and logistic regression like methods. The model can effectively predict which team will advance forward in tournament at each stage even before the start of the tournament.
 3. Used in supply chain optimization, that is trying to understand how to choose the best ways to acquire low cost, but quality materials a firm can use for the manufacture of a product. For example, when building a laptop, a company has to decide the best suited components, when they should be purchased, what quantities should they purchased keeping an objective of making maximum economic benefit,
-4. Used in Computational sustainability issues. For example, developing quantitative models for allocation of funds, buying of lands for preservation of endangered species.Use of Deterministic integer program and network design programs consisting of millions of nodes are extensively used for this type of projects. 
+4. Used in Computational sustainability issues. For example, developing quantitative models for allocation of funds, buying of lands for preservation of endangered species.Use of Deterministic integer program and network design programs consisting of millions of nodes are extensively used for this type of projects.
 5. Used in scheduling manufacturing operations involving tens of machines and more than one tool systems in each machines. Order of manufacturing a product is also determined. For example, consider a laundry basket of five different colors , the order of producing these different colored baskets on different machines should be determined. In a real world situation, more than one product of different colors are being produced concurrently, hence the order is important.
 6. Used in vehicle dynamics. Creating terrain models so that suspension system, fuel handling etc in vehicles are managed in an optimum way. Used in military operations where we use different vehicles, like tanks and develop a target terrain model and appropriately incorporate fuel, suspension and other aspect of vehicle according to that model.
 7. Action research projects to provide sustained energy access to rural communities through localization of solar Off grid technologies and energy efficient devices. Effective scheduling, manufacture, and implementation strategies can be developed via combining techniques in industrial engineering and O.R. AN ecosystem consisting of retailers, manufacturers, financial institutions, infrastructure that are owned and managed by local rural communities can be developed. Example project is 'Solar Oorja',   implemented by Dept. of IEOR, IIT, Bombay
 
 8. In healthcare management, in the problem of kidney exchange, where incompatible receiving pair can exchange their donors kidney to find a compatible match for them.
 9. IMPReSS, an automated production planning and delivery management system for the entire production network of a company. The system is developed as a combination of heuristics as well as optimization-based techniques. It works by breaking up the overall problem into smaller, more manageable problems by using a heuristic decomposition approach.. The  system interfaces with sophisticated
-databases allowing for forecasting, quotation and order entry, materials and dynamic information on capacities.  
+databases allowing for forecasting, quotation and order entry, materials and dynamic information on capacities.
 
 Successful implementation on : Harris Corporation - Semiconductor Section, Melbourne, Florida, U.S.
 
@@ -233,7 +234,7 @@ The applications include:
 ### Game Theory
 
 Game Theory is concerned with the study of decision-making in situations where two or more rational opponents are involved under conditions of competition and conflicting
-interest. 
+interest.
 
 Examples of competitive situations are:
 

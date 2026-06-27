@@ -1,10 +1,11 @@
 ---
 title: Linux Administration - Overview
+description: Linux administration reference covering files and directories, processes, system information, shell scripting basics, and the OS layered architecture.
 draft: false
 date: 2025-12-06
 tags: [linux]
 ---
-# Module 01 \- Files and Directories
+## Module 01 - Files and Directories
 
 ### Working with Directories
 
@@ -12,18 +13,18 @@ tags: [linux]
   - **Syntax:** *pwd*
   - **Example Output:** */home/jetlee*
 - **cd** (Change Directory)
-  - **Syntax:** *cd \&lt;absolute / relative path\&gt;*
+  - **Syntax:** *cd <absolute / relative path>*
   - **Usage Examples:**
     - *cd /etc* (Absolute path)
     - If *pwd* is */home*, then *cd jetlee* (Relative path)
   - **Notes:**
-    - Used alone (*$cd*), navigates to the current user\&apos;s home directory.
-    - *$cd \~*: Navigates to the user\&apos;s home directory (Example: */home/jetlee*).
+    - Used alone (*$cd*), navigates to the current user's home directory.
+    - *$cd \~*: Navigates to the user's home directory (Example: */home/jetlee*).
     - *$cd ..*: Navigates to the parent directory.
     - **Absolute Path:** Starts with */* (root directory, the top of the file hierarchy).
     - **Relative Path:** Starts without a */* (starting point is the current directory).
 - **ls** (List contents of a directory)
-  - **Syntax:** *ls \&lt;path\&gt;*
+  - **Syntax:** *ls <path>*
   - **Usage:**
     - If no path is given, lists files and folders of the current directory.
     - *ls /etc*
@@ -43,28 +44,28 @@ tags: [linux]
 ### Working with Files
 
 - **file** (Know the type of files)
-  - **Syntax:** *file \&lt;filepath\&gt;*
+  - **Syntax:** *file <filepath>*
   - **Notes:** Linux does not use extensions like *\*.txt* or *\*.pdf* to communicate file type.
   - **Example:** *file example.txt*
-  - **Option:** *\-s \&lt;filename\&gt;*: Used to know about special files, typically inside */proc* or */dev*.
+  - **Option:** *\-s <filename>*: Used to know about special files, typically inside */proc* or */dev*.
     - **Example:** *file \-s /dev/sda1*, *file \-s /proc/cpuinfo*
 - **touch** (Create empty files)
-  - **Syntax:** *touch filename1 \&lt;filename2,...\&gt;*
+  - **Syntax:** *touch filename1 <filename2,...>*
   - **Usage:** Can specify the entire path and create multiple files at once.
     - **Examples:** *touch /home/jetlee/file1*, *touch file1 file2 file3*
-  - **Option:** *\-t \&lt;properties\&gt; filename*: Used to set properties to the file during creation.
+  - **Option:** *\-t <properties> filename*: Used to set properties to the file during creation.
     - **Example:** *touch \-t 20220420000 test.txt*
 - **rm** (Remove files or directories)
-  - **Syntax:** *rm \&lt;path to file | directory\&gt;*
+  - **Syntax:** *rm <path to file | directory>*
   - **Notes:** Removal is permanent; command line does not have trash/recovery systems.
   - **Options:**
     - *\-i*: Interactive (i), provides a prompt asking for confirmation before deletion.
-    - *\-rf \&lt;path to directory\&gt;*: Used to delete non-empty directories. *r* stands for recursive, and *f* stands for force.
+    - *\-rf <path to directory>*: Used to delete non-empty directories. *r* stands for recursive, and *f* stands for force.
     - **Examples:** *rm \-rf testDirectory*, *rm testFile.txt*
 - **cp** (Copy files)
   - **Syntax 1 (Single file):** *cp source target*
     - Copies the source to target destination. Both can be absolute paths. Target can be a file or directory.
-  - **Syntax 2 (Multiple files):** *cp source1 \&lt;source2,..\&gt; target*
+  - **Syntax 2 (Multiple files):** *cp source1 <source2,..> target*
     - Target must be a directory.
   - **Options:**
     - *\-r directory target*: Copies files or subdirectories recursively.
@@ -92,12 +93,12 @@ Linux partially follows the Filesystem Hierarchy Standard (FHS). Everything in t
 - **/ \- Root Directory**
   - The starting point for the file system. Everything in Linux resides under root.
 - **Binary Directories (Executable Programs)**
-  - **/bin:** Contains software available for single-user mode and for all users\&apos; day-to-day activities (e.g., *cat*, *grep*, *cp*, *mv*).
+  - **/bin:** Contains software available for single-user mode and for all users' day-to-day activities (e.g., *cat*, *grep*, *cp*, *mv*).
   - **/sbin:** Contains system binaries essential for configuring the operating system. Majority require root privilege to run (e.g., *ipconfig*, *mkfs.ext4*, *fdisk*).
   - **/lib:** Contains shared libraries used by programs in */bin* and */sbin* (e.g., *libconsole.so.0.0.0*, *libcfont.so.0*).
   - **/opt:** Contains optional software outside the distribution repository; may be empty. A large application can store its files inside */opt/$packagename/* with subdirectories like */bin*, */etc*, */lib*, */man* (e.g., */opt/test/etc*).
 - **Configuration Directories**
-  - **/etc:** Contains machine-specific configuration files. Historically \&apos;etcetera,\&apos; now stands for \&apos;Editable Text Configuration.\&apos; Files usually have the package name with a *.conf* extension (e.g., *host.conf*, *adduser.conf*).
+  - **/etc:** Contains machine-specific configuration files. Historically 'etcetera,' now stands for 'Editable Text Configuration.' Files usually have the package name with a *.conf* extension (e.g., *host.conf*, *adduser.conf*).
   - **Important Subdirectories:** */etc/init.d/*, */etc/X11/*, */etc/sysconfig/*
 - **Data Directories**
   - **/home:** Directory for normal user data (personal/professional). Each user has a subdirectory (*/home/$Username/*). User profiles are stored via hidden files (e.g., *.bashrc*). *cd* or *cd\~* redirects a normal user here.
@@ -129,7 +130,7 @@ Linux partially follows the Filesystem Hierarchy Standard (FHS). Everything in t
     - *var/cache/*: Main storage directory for cache data.
     - *var/spool/*: Contains spool directories for mail, cron, and other spool files.
 
-# Module 02 \- Process
+## Module 02 - Process
 
 ### Process Fundamentals
 
@@ -159,7 +160,7 @@ Linux partially follows the Filesystem Hierarchy Standard (FHS). Everything in t
   - Output columns typically include process ID, user, uptime, and command.
   - **Option:** *ps \-x* outputs the processes started by the current user.
 
-# Module 03 \- Getting System Information
+## Module 03 - Getting System Information
 
 ### Getting System Information Commands
 
@@ -188,7 +189,7 @@ Linux partially follows the Filesystem Hierarchy Standard (FHS). Everything in t
     - List of logged-in users.
   - **Syntax:** *who \[-option\] \[file\]*
 
-# Module 04 \- Shell
+## Module 04 - Shell
 
 ### Types of Shell
 
@@ -219,7 +220,7 @@ Linux partially follows the Filesystem Hierarchy Standard (FHS). Everything in t
 - **alias**
   - Creates aliases (replaces a command with a familiar name).
   - Used to easily supply default parameters to commands.
-  - **Syntax:** *alias aliasname=\&apos;some existing command name\&apos;*
+  - **Syntax:** *alias aliasname='some existing command name'*
   - **Examples:**
 
 ```
@@ -233,17 +234,17 @@ one
 two
 
 # create abbreviations
-$alias c=&apos;clear&apos;
-# command &apos;c&apos; will clear the screen
+$alias c='clear'
+# command 'c' will clear the screen
 
 # to supply default parameters
-$alias rm=&apos;rm -i&apos;
-# command &apos;rm&apos; will execute remove command in interactive (-i) mode.
+$alias rm='rm -i'
+# command 'rm' will execute remove command in interactive (-i) mode.
 
 # to view aliases
 $alias c rm
-c=&apos;clear&apos;
-rm=&apos;rm =i&apos;
+c='clear'
+rm='rm =i'
 ```
 
 - **unalias**
@@ -277,11 +278,11 @@ let a=0
 while [ $a -le 10 ]
 do
  echo "$a"
-  a=&apos;expr $a + 1&apos;
+  a='expr $a + 1'
 done
 ```
 
-- **Execution Flow:** If the condition is \&apos;true\&apos;, the body executes. If \&apos;false\&apos;, the body is ignored, and statements after *done* execute.
+- **Execution Flow:** If the condition is 'true', the body executes. If 'false', the body is ignored, and statements after *done* execute.
   - **for loop**
 - Executes statement(s) repeatedly based on a condition.
 - **Syntax 1 (C-style):**
@@ -294,7 +295,7 @@ done
 ```
 
 ```
-* **Components:** Initialization (run once), Condition (evaluated), and Iteration (updated).  
+* **Components:** Initialization (run once), Condition (evaluated), and Iteration (updated).
 * **Example:**
 ```
 
@@ -307,7 +308,7 @@ done
 ```
 
 ```
-* **Execution Flow:** Initialization runs once. The condition is checked, the body executes, and iteration executes. Repeats until the condition is false.  
+* **Execution Flow:** Initialization runs once. The condition is checked, the body executes, and iteration executes. Repeats until the condition is false.
 ```
 
 - **Syntax 2 (Word-list style):**
@@ -331,11 +332,11 @@ done
 ```
 
 ```
-* **Execution Flow:** The loop iterates over the given set of space-separated items and executes the loop body for each one.  
+* **Execution Flow:** The loop iterates over the given set of space-separated items and executes the loop body for each one.
 ```
 
 - **until loop**
-  - Behaves like a *while* loop but executes *until* the condition becomes true. If the condition evaluated is \&apos;false\&apos;, the body executes.
+  - Behaves like a *while* loop but executes *until* the condition becomes true. If the condition evaluated is 'false', the body executes.
   - **Syntax:**
 
 ```shell
@@ -385,7 +386,7 @@ done
   - Exits from the *current iteration* of the loop.
   - Statements before *continue* are executed. When *continue* runs, the remaining statements inside the loop body are ignored, and the loop proceeds to the next iteration after checking the condition.
   - **Syntax (Single Loop):** *continue*
-  - **Syntax (Nested Loops):** *continue n* (where *n* specifies the nth enclosing loop\&apos;s current iteration to exit from).
+  - **Syntax (Nested Loops):** *continue n* (where *n* specifies the nth enclosing loop's current iteration to exit from).
   - **Example:**
 
 ```shell
@@ -476,14 +477,14 @@ Variables are memory locations used to temporarily store data in a script.
     - **Example:** *MyName="JetLee"*
   - **Access:** To retrieve the value of a variable, prefix its name with a dollar sign (*$*).
     - **Example:** *echo $MyName*
-  - **Read-Only:** Use *readonly* to make a variable\&apos;s value immutable.
+  - **Read-Only:** Use *readonly* to make a variable's value immutable.
     - **Example:** *readonly MyName*
   - **Unsetting:** Use *unset* to remove a variable.
     - **Example:** *unset MyName*
 
-# Linux Architecture
+## Linux Architecture
 
-Linux follows a layered architecture: Hardware (innermost) \-\&gt; Kernel \-\&gt; Shell \-\&gt; User/Application Programs (outermost).
+Linux follows a layered architecture: Hardware (innermost) \-\> Kernel \-\> Shell \-\> User/Application Programs (outermost).
 
 - **Hardware Layer:** Consists of all physical devices in the system.
 - **Kernel Layer:** The core of the operating system.
@@ -496,7 +497,7 @@ Linux follows a layered architecture: Hardware (innermost) \-\&gt; Kernel \-\&gt
     - I/O, file, and disk management.
     - Memory management.
 - **Shell Layer:** A user program that provides an an interface between user/application programs and the kernel.
-  - Also called the \&apos;command line interface.\&apos;
+  - Also called the 'command line interface.'
   - Converts human-readable command input into machine code (a command-line language interpreter).
   - Starts when the user logs in or a terminal is opened.
 - **User/Application Programs:** Programs that aid the user and system, often having Graphical Interfaces (e.g., Office tools).

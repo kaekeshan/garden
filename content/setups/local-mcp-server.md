@@ -1,8 +1,9 @@
 ---
 title: Local MCP Filesystem Agent
+description: This system is intended to form a closed loop system, which is private and secure. The architecture follows a "client-server-provider" model
 draft: false
-date: 2025-02-27 
-tags: [setups,dev,python,mcp,docker]
+date: 2025-02-27
+tags: [setups, dev, python, mcp, docker]
 ---
 
 ## Introduction
@@ -36,20 +37,20 @@ where [AnythingLLM](https://anythingllm.com/) acts as the central orchestrator (
 docker volume create ollama
 ```
 
-2. Create and run the docker container  
+2. Create and run the docker container
 
 ```shell
-docker run -d --name ollama -p 11434:11434 -v ollama:/root/.ollama ollama/ollama 
+docker run -d --name ollama -p 11434:11434 -v ollama:/root/.ollama ollama/ollama
 ```
 For detailed information regarding the docker flags, visit [[../code/commands#docker-command-line-interface|docker CLI toolkit]]
 
 3. Pull the model `llama3.2:3b` inside the container
 
 ```shell
-docker exec -it ollama ollama pull llama3.2:3b 
+docker exec -it ollama ollama pull llama3.2:3b
 ```
 
-4. Verify the model existence 
+4. Verify the model existence
 
 ```shell
 docker exec -it ollama ollama list
@@ -64,12 +65,12 @@ Invoke-RestMethod http://localhost:11434/apis/tags
 6. Configure the MCP server
 >[!IMPORTANT] Make sure you have python installed within your system. Follow [[python-account|Python Installation]]
 
-- Create a python virtual environment called `mcp`. 
+- Create a python virtual environment called `mcp`.
 - Activate the environment using `mcp\Scripts\activate`
 - Install `mcp` dependency using `pip install mcp`
-- Create `mcp_server.py` with basic file system tools  
+- Create `mcp_server.py` with basic file system tools
 
->[!Note] The server can be adapted to work on a specific directory using environment variables   
+>[!Note] The server can be adapted to work on a specific directory using environment variables
 
 ```python
 import asyncio
@@ -200,7 +201,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-7. Add the MCP server configurations to AnythingLLM 
+7. Add the MCP server configurations to AnythingLLM
 
 ```json
 {
@@ -218,7 +219,7 @@ if __name__ == "__main__":
 }
 ```
 
-8. Interact with the Agent 
+8. Interact with the Agent
 
 + Create a workspace and configure the workspace to use the local LLM model, using the URL `http://localhost:11434/v1`
 + Use the `@agent` annotation to interact using agent mode

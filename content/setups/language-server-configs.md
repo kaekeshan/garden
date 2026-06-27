@@ -1,5 +1,6 @@
 ---
 title: Neovim - LSP
+description: The Language Server Protocol (LSP) is an open, JSON-RPC-based protocol between source-code editors / IDEs and language servers. It standardises "language intelligence" features — code completion, s...
 draft: false
 tags: [vim, lsp, reference]
 date: 2025-12-01

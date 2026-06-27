@@ -1,5 +1,6 @@
 ---
 title: Thekkan Kalari - Introductory Concepts
+description: ബാലി, ഭീമൻ എന്നിവരിലൂടെ ഉത്ഭവിച്ചതെന്ന് കരുതപ്പെടുന്ന 64 ശൈലികളിൽ നിന്നാണ് തെക്കൻ കളരിയുടെ ഉത്ഭവം.
 draft: false
 date: 2026-04-09
 tags: [health, martial-art, study]

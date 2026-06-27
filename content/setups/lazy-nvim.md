@@ -1,5 +1,6 @@
 ---
 title: Neovim - Lazy Package Manager
+description: Lazy.nvim is a package manager for Neovim that handles plugin installation, updates, lazy-loading, and configuration from a single Lua entry point.
 draft: false
 tags: [vim, reference]
 date: 2025-12-01

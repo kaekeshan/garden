@@ -1,16 +1,18 @@
 ---
 title: Terminal Toolkit
+description: Cross-platform terminal toolkit — Windows command line, PowerShell, and Linux commands for files, environment, network, git, docker, and patch workflows.
+draft: false
 tags: [pwsh, cmd, linux, docker]
 date: 2025-11-30
 ---
 
-### Windows Command Line 
+### Windows Command Line
 
-#### Files & Folders 
+#### Files & Folders
 <!-- case 1 -->
 
 <details>
-<summary>Deleting a non empty directory </summary>  
+<summary>Deleting a non empty directory </summary>
 
 ```bash
 rmdir /s /q $DIR_NAME
@@ -20,7 +22,7 @@ rmdir /s /q $DIR_NAME
 <!-- case 2 -->
 
 <details>
-<summary>Creating a empty file </summary>  
+<summary>Creating a empty file </summary>
 
 ```bash
 type NULL > $FILE_NAME
@@ -30,7 +32,7 @@ type NULL > $FILE_NAME
 <!-- case 3 -->
 
 <details>
-<summary>Removing a File </summary>  
+<summary>Removing a File </summary>
 
 ```bash
 del $FILE_NAME
@@ -42,7 +44,7 @@ del $FILE_NAME
 <!-- case 1 -->
 
 <details>
-<summary> windows-installation\Users\USER-NAME\AppData\local </summary>  
+<summary> windows-installation\Users\USER-NAME\AppData\local </summary>
 
 ```bash
 %localappdata%
@@ -59,7 +61,7 @@ del $FILE_NAME
 <!-- case 1 -->
 
 <details>
-<summary> Copy the current directory path </summary>  
+<summary> Copy the current directory path </summary>
 
 ```bash
 (Get-Location).Path | Set-Clipboard
@@ -71,7 +73,7 @@ del $FILE_NAME
 <!-- case 1 -->
 
 <details>
-<summary> Copy the file </summary>  
+<summary> Copy the file </summary>
 
 ```bash
 Copy-Item -Path <source> -Destination <destination>
@@ -81,7 +83,7 @@ Copy-Item -Path <source> -Destination <destination>
 <!-- case 2 -->
 
 <details>
-<summary> Remove the file </summary>  
+<summary> Remove the file </summary>
 
 ```bash
 Remove-Item -Path "C:\path\to\your\file.txt"
@@ -91,7 +93,7 @@ Remove-Item -Path "C:\path\to\your\file.txt"
 <!-- case 3 -->
 
 <details>
-<summary> Rename the file </summary>  
+<summary> Rename the file </summary>
 
 ```bash
 Rename-Item -Path "C:\path\to\your\file.txt" -Newname "updatedname"
@@ -101,7 +103,7 @@ Rename-Item -Path "C:\path\to\your\file.txt" -Newname "updatedname"
 <!-- case 4 -->
 
 <details>
-<summary> Move a file </summary>  
+<summary> Move a file </summary>
 
 ```bash
 Move-Item -Path "C:\path\to\your\file.txt" -Destination "C:\path\to\your\destinaton"
@@ -111,7 +113,7 @@ Move-Item -Path "C:\path\to\your\file.txt" -Destination "C:\path\to\your\destina
 <!-- case 5 -->
 
 <details>
-<summary> Check file hash </summary>  
+<summary> Check file hash </summary>
 
 ```bash
 Get-FileHash -Path <string> [-Algorithm <string>]
@@ -121,10 +123,10 @@ Get-FileHash -Path <string> [-Algorithm <string>]
 <!-- case 6 -->
 
 <details>
-<summary> Remove a non empty directory </summary>  
+<summary> Remove a non empty directory </summary>
 
 ```bash
-Remove-Item C:\path\to\non\empty\folder -Recurse -Force 
+Remove-Item C:\path\to\non\empty\folder -Recurse -Force
 ```
 </details>
 
@@ -132,7 +134,7 @@ Remove-Item C:\path\to\non\empty\folder -Recurse -Force
 <!-- case 7 -->
 
 <details>
-<summary> Create a empty file </summary>  
+<summary> Create a empty file </summary>
 
 ```bash
 ni filename.extension
@@ -144,16 +146,16 @@ ni filename.extension
 <!-- case 1 -->
 
 <details>
-<summary> Mirror a folder to another folder (multi threading) </summary>  
+<summary> Mirror a folder to another folder (multi threading) </summary>
 
 ```bash
 robocopy "C:\Users\Name\Documents" "D:\Backup\Documents" /MIR /MT:16 /R:3 /W:1 /Z
 ```
-- `/MIR` : copies all files and sub directories and deletes files in the destination if they no longer exists in the source. 
+- `/MIR` : copies all files and sub directories and deletes files in the destination if they no longer exists in the source.
 - `/MT:16` : multi-threading, process up to 16 files simultaneously.
-- `/R:3` : retry 3 times. Default is 1 million. 
-- `/W:1` : wait 1 second b/w retires. 
-- `/Z` : restart mode 
+- `/R:3` : retry 3 times. Default is 1 million.
+- `/W:1` : wait 1 second b/w retires.
+- `/Z` : restart mode
 </details>
 
 <!-- case 2 -->
@@ -171,7 +173,7 @@ robocopy "C:\SourceFolder" "E:\DestinationFolder" /E /MT:16 /R:3 /W:1
 
 <details>
   <summary> Move files </summary>
-  
+
 
 ```bash
 robocopy "C:\Downloads" "D:\Archive" /MOVE /E
@@ -183,7 +185,7 @@ robocopy "C:\Downloads" "D:\Archive" /MOVE /E
 
 <details>
   <summary> Copy specific files types </summary>
-  
+
 
 ```bash
 robocopy "C:\MessyFolder" "D:\Images" *.jpg *.png /E
@@ -195,21 +197,21 @@ robocopy "C:\MessyFolder" "D:\Images" *.jpg *.png /E
 ---
 
 ### Docker Command Line Interface
- 
+
 <!-- case 1 -->
 
 <details>
-<summary> Create a new container </summary>  
+<summary> Create a new container </summary>
 
 ```bash
-docker run -it image-name 
+docker run -it image-name
 ```
 - `it` - opens interactive shell
 - check if image is present locally, else fetch it from [docker hub](https://hub.docker.com)
 </details>
 
 <details>
-  <summary>List active containers</summary>  
+  <summary>List active containers</summary>
 
 ```bash
 docker container ls
@@ -217,7 +219,7 @@ docker container ls
 </details>
 
 <details>
-  <summary>List all (non-active/active) containers</summary>  
+  <summary>List all (non-active/active) containers</summary>
 
 ```bash
 docker container ls -a
@@ -225,7 +227,7 @@ docker container ls -a
 </details>
 
 <details>
-  <summary>Run a container</summary>  
+  <summary>Run a container</summary>
 
 ```bash
 docker start container-name
@@ -235,7 +237,7 @@ docker start container-name
 </details>
 
 <details>
-  <summary>Terminate a container</summary>  
+  <summary>Terminate a container</summary>
 
 ```bash
 docker stop container-name
@@ -243,7 +245,7 @@ docker stop container-name
 </details>
 
 <details>
-  <summary>Execute a command inside a container</summary>  
+  <summary>Execute a command inside a container</summary>
 
 ```bash
 docker exec [-it] container-name command
@@ -252,7 +254,7 @@ docker exec [-it] container-name command
 
 <details>
   <summary>To list Docker Images</summary>
-  
+
 ```bash
 docker images
 ```
@@ -260,7 +262,7 @@ docker images
 
 <details>
   <summary>To map ports b/w host and image</summary>
-  
+
 ```bash
 docker run -p base-port:image-port image-name
 ```
@@ -268,7 +270,7 @@ docker run -p base-port:image-port image-name
 
 <details>
   <summary>To map environmental variables b/w host and image</summary>
-  
+
 ```bash
 docker run -e key1=value1 -e key2=value2 image-name
 ```
@@ -277,7 +279,7 @@ docker run -e key1=value1 -e key2=value2 image-name
 <details>
   <summary>Containerize an Image</summary>
 
-- create a `Dockerfile`. Refer this [[../setups/quartz-dev|page]] for example Dockerfile. 
+- create a `Dockerfile`. Refer this [[../setups/quartz-dev|page]] for example Dockerfile.
 ```Dockerfile
 	FROM ubuntu
 	// run inside image
@@ -290,7 +292,7 @@ docker run -e key1=value1 -e key2=value2 image-name
     ENTRYPOINT ["entry"]
 ```
 
-- build the image 
+- build the image
 
 ```bash
 Docker build -t image-name dockerfile-folder
@@ -306,7 +308,7 @@ Docker build -t test-img .
 
 <details>
   <summary>Check if docker can identify Nvida GPU drivers</summary>
-  
+
 ```bash
 docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
 ```
@@ -314,7 +316,7 @@ docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
 
 <details>
   <summary>Create from a `docker-compose.yaml` file</summary>
- 
+
  ```bash
  docker compose up -d
  ```
@@ -322,7 +324,7 @@ docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
 
 <details>
   <summary>Install Open-webui and Ollama as single image</summary>
- 
+
  ```bash
  docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
  ```
@@ -334,7 +336,7 @@ docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
 
 <details>
   <summary>Updating the packages</summary>
- 
+
 ```bash
 pacman -Syu
 ```
@@ -350,7 +352,7 @@ pacman -S package1 package2
 
 <details>
   <summary>Installing .pkg.tar.zst packages using Pacman</summary>
- 
+
  ```bash
 pacman -U [-noconfirm] <file-name.pkg.tar.zst>
  ```
@@ -366,7 +368,7 @@ pacman -Q | grep <pattern/package_name>
 
 <details>
   <summary>Update the name or move a file or directory</summary>
- 
+
  ```bash
 mv source destination
  ```
@@ -385,14 +387,14 @@ cp source destination
   <summary>Extracting a zip files</summary>
 
 ```bash
-unzip zipfile.zip -d output-directory 
+unzip zipfile.zip -d output-directory
 ```
 </details>
 
 
 <details>
   <summary>Update font cache</summary>
- 
+
 ```bash
 fc-cache -fv
 ```
@@ -401,7 +403,7 @@ fc-cache -fv
 
 <details>
   <summary>Remove non empty directory</summary>
- 
+
 ```bash
 rm -r directory-name
 ```
@@ -409,7 +411,7 @@ rm -r directory-name
 
 <details>
   <summary>Find a file in the system</summary>
- 
+
 ```bash
 [sudo] find <path> -name name-or-extension
 ```
@@ -471,7 +473,7 @@ chmode +x path/to/appname.desktop
 
 <details>
   <summary>Installing patch for Suckless terminal</summary>
-  
+
 ```bash
 # Clone the suckless.org repository for the st terminal emulator
 git clone https://git.suckless.org/st
@@ -501,7 +503,7 @@ sudo make clean install
 
 <details>
   <summary>Clean up the system</summary>
- 
+
 - remove orphaned packages
 ```bash
 sudo pacman -Rns $(pacman -Qtdq)
@@ -509,7 +511,7 @@ sudo pacman -Rns $(pacman -Qtdq)
 
 - clear package cache
 ```bash
-sudo paccache -r  
+sudo paccache -r
 ```
 
 - clean package database
@@ -541,8 +543,8 @@ sudo rm -rf /tmp/*
 <details>
   <summary>Setting the refresh rate for external monitor</summary>
 
-- Use the `cvt` command to generate a modeline for your desired resolution and refresh rate.  
-For example, for a 1920 x 1080 resolution at 100hz  
+- Use the `cvt` command to generate a modeline for your desired resolution and refresh rate.
+For example, for a 1920 x 1080 resolution at 100hz
 
 ```bash
 cvt 1920 1080 100

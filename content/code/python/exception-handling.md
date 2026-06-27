@@ -1,14 +1,15 @@
 ---
 title: Exception Handling in Python
+description: An error in python, can be syntactical error or an exception.
 draft: false
-tags: [dev,python]
+tags: [dev, python]
 date: 2025-12-06
 ---
 
 ## Why ?
 
-An error in python, can be syntactical error or an exception. 
-- exception : a event causing  disruption in the normal flow of execution.  
+An error in python, can be syntactical error or an exception.
+- exception : a event causing  disruption in the normal flow of execution.
 - exception handling : process of responding to the occurrence of exceptions, during computation, of exceptional conditions requiring special processing, often changing the flow of program execution.
 
 ## Process ?
@@ -24,7 +25,7 @@ Find error → Take caution **(try)** → fix error **(catch)**
 3. **Else**    : run if there is no exceptions in try block
 4. **Finally** : runs any way
 
-![](../assets/exception/Untitled.png)
+![Try/except/else/finally control-flow diagram](../../assets/exception/try-except-else-finally-diagram.png)
 
 ## Codes
 
@@ -36,7 +37,7 @@ Find error → Take caution **(try)** → fix error **(catch)**
 
 we can use raise to throw an exception if a condition occurs
 
-example 
+example
 
 ```python
 x = 10
@@ -53,7 +54,7 @@ Instead of waiting for a program to crash midway, you can also start by making a
 
 we assert that a certain condition is met, if the condition is true, then the program continuous to execute, if false , then an assertion error exception is thrown.
 
-assert: 
+assert:
 { test if the condition is true
 
 ```python
@@ -70,7 +71,7 @@ def linux_interaction():
 	assert ('linux' in sys.platform), "Function can only run on linux system only. "
   print("doing something..")
 
-#handling the exception 
+#handling the exception
 try:
 	linux_interaction()
 except:
@@ -101,7 +102,7 @@ except FileNotFoundError as fnf_error
 
 // exception error becomes invisible if bare exception statements are used.
 
-// we can anticipate multiple exceptions 
+// we can anticipate multiple exceptions
 
 // in try block, the execution of statements inside try block stops immediately if it runs into an exception, the remaining statements will not be executed.
 
@@ -115,7 +116,7 @@ except FileNotFoundError as fnf_error
 
  the statement that runs anyways.
 
-![](../assets/exception/Untitled%201.png)
+![Finally block always executes regardless of exception](../../assets/exception/finally-block-flow.png)
 
 ---
 
@@ -133,4 +134,4 @@ class CustomException(Exception):
 
 example:
 
-![](../assets/exception/Untitled%202.png)
+![Custom exception class example output](../../assets/exception/custom-exception-example.png)

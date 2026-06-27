@@ -1,5 +1,6 @@
 ---
 title: File Handling in Python
+description: How to read from and write to files on disk — text and binary, single-call and line-by-line, with a closing menu-driven program that ties it all together.
 draft: false
 tags: [python, tutorial]
 date: 2025-12-06
@@ -103,7 +104,7 @@ f.writelines(['a\n', 'b\n'])  # any iterable of strings — list, tuple, set
 
 `writelines` does **not** add newlines for you. If you want each element on its own line, append `\n` to every element yourself — otherwise the file ends up as a single long line.
 
-![](../assets/python-filehandling/Untitled.png)
+![Output of write and writelines methods](../../assets/python-filehandling/write-methods-output.png)
 
 ## Reading
 
@@ -121,23 +122,23 @@ A few practical notes:
 - The file pointer advances after every read — calling `read()` twice gives you the full file the first time and `''` the second.
 - `'\n'` counts as a single character, so `f.read(10)` may end mid-line.
 
-![](../assets/python-filehandling/Untitled%201.png)
+![Overview of the four read methods](../../assets/python-filehandling/read-methods-output.png)
 
 Example program:
 
-![](../assets/python-filehandling/Untitled%202.png)
+![Code showing the example read program](../../assets/python-filehandling/example-program.png)
 
 Reading the whole file:
 
-![](../assets/python-filehandling/Untitled%203.png)
+![Output of reading the whole file with read()](../../assets/python-filehandling/read-all-output.png)
 
 Reading the first ten characters:
 
-![](../assets/python-filehandling/Untitled%204.png)
+![Output of reading the first ten characters](../../assets/python-filehandling/read-n-chars-output.png)
 
 Reading a single line — note that `'\n'` is one character:
 
-![](../assets/python-filehandling/Untitled%205.png)
+![Output of readline() showing trailing newline character](../../assets/python-filehandling/readline-output.png)
 
 >[!warning] Extra blank lines from printing
 >
@@ -145,19 +146,19 @@ Reading a single line — note that `'\n'` is one character:
 
 Example:
 
-![](../assets/python-filehandling/Untitled%206.png)
+![Code example that produces extra blank lines](../../assets/python-filehandling/extra-blank-lines-example.png)
 
 Output:
 
-![](../assets/python-filehandling/Untitled%207.png)
+![Output showing the extra blank lines between printed lines](../../assets/python-filehandling/extra-blank-lines-output.png)
 
 Add `end=''` to remove the extra blank line:
 
-![](../assets/python-filehandling/Untitled%208.png)
+![Code with end='' removing the extra blank lines](../../assets/python-filehandling/end-empty-fix.png)
 
 Reading all lines into a list — use a `for` loop to print them one by one:
 
-![](../assets/python-filehandling/Untitled%209.png)
+![readlines() output and for-loop iteration over the list](../../assets/python-filehandling/readlines-for-loop.png)
 
 ## The `with` statement
 

@@ -1,5 +1,6 @@
 ---
 title: Software Development Life Cycle
+description: A software is a set of instructions that the system understands and makes it perform some operations. SDLC — Software Development Life Cycle — broadly describes the six phases a piece of software m...
 draft: false
 tags: [notes]
 date: 2025-12-06

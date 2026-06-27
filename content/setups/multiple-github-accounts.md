@@ -1,6 +1,8 @@
 ---
 title: GitHub Multi-Login
-tags: ["setups","github","dev"]
+description: Managing multiple GitHub accounts on a single machine — SSH config, separate keys per identity, and switching between accounts per repository.
+draft: false
+tags: [setups, github, dev]
 date: 2025-11-30
 ---
 
@@ -43,7 +45,7 @@ Host github.test // hostname can be customized
     IdentityFile ~/.ssh/id_25519_test // defines the private key file
     IdentitiesOnly yes
 ```
-### Configure .bashrc 
+### Configure .bashrc
 
 >[!info] repeat for all user accounts
 
@@ -70,7 +72,7 @@ git config --global --edit
 
 
 [user]
-	name = primary username 
+	name = primary username
 	email = primary email address
 
 [includeIf "gitdir:secondary-location"]
@@ -89,14 +91,14 @@ Create the .gitconfig-test file under home directory (~)
 
 ```bash
 [user]
-	name = secondary username 
+	name = secondary username
 	email = secondary email address
 [core]
     sshCommand = "ssh -i ~/.ssh/id_25519_test"
 ```
 ### Validate the configs
 
-Go to the gitdir defined within the ~\.gitconfig for the secondary account  
+Go to the gitdir defined within the ~\.gitconfig for the secondary account
 Clone a repository using SSH
 
 ```bash

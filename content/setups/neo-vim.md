@@ -1,5 +1,6 @@
 ---
 title: Neovim - Setup
+description: This page walks through the Neovim configuration I use day-to-day on Windows. It assumes you already have lazy-nvim set up as the package manager — every plugin spec below is a .lua file under your...
 draft: false
 tags: [vim, tutorial]
 date: 2025-11-30

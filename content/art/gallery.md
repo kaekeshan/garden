@@ -1,5 +1,6 @@
 ---
 title: Gallery
+description: Drawing gallery — selected works from personal art practice.
 draft: false
 tags: [art, photoshop]
 date: 2025-12-06

@@ -1,5 +1,6 @@
 ---
 title: Computational Logics
+description: General Purpose Algorithm Collections
 draft: false
 tags: [python, logic]
 date: 2025-11-30
@@ -29,7 +30,7 @@ General Purpose Algorithm Collections
               return False
           i += 6
       return True
- ``` 
+ ```
 
 </details>
 
@@ -61,7 +62,7 @@ General Purpose Algorithm Collections
 
 <details>
   <summary>Sum of Arithmetic Progression</summary>
- 
+
 
 ```python
 def sum_arithmetic_progression(step: int, limit: int) -> int:

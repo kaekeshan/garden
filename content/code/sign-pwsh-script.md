@@ -1,7 +1,8 @@
 ---
 title: Sign Powershell Scripts
-draft: true
-tags: ['pwsh']
+description: Signing PowerShell scripts on Windows — how to create a self-signed certificate and use Set-AuthenticodeSignature to sign .ps1 files.
+draft: false
+tags: [pwsh]
 date: 2025-12-01
 ---
 
@@ -11,13 +12,13 @@ date: 2025-12-01
 referenced from [official microsoft documentation](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.5&viewFallbackFrom=powershell-7.3#methods-of-signing-scripts)
 
 >[!info] Note
-> User can create a self-signed certificate for which your computer is the authority that creates the certificate. 
+> User can create a self-signed certificate for which your computer is the authority that creates the certificate.
 > This certificate is free of charge and enables you to write, sign, and run scripts on your computer.
 > However, a script signed by a self-signed certificate will not run on other computers.
 
-### Set the Execution policy of the system to remote signed  
+### Set the Execution policy of the system to remote signed
 >[!info] Note
-> The RemoteSigned policy allows you to run signed scripts or unsigned scripts that you create locally. 
+> The RemoteSigned policy allows you to run signed scripts or unsigned scripts that you create locally.
 
 ```powershell
 # run the command as admin
@@ -37,7 +38,7 @@ $cert = New-SelfSignedCertificate @params
 ```
 
 
-### Create a Signing Script 
+### Create a Signing Script
 
 Use the following script to sign scripts. Since we have **AllSigned** policy enabled by default, this script also needs to be signed first before use.
 
